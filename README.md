@@ -20,14 +20,15 @@ O ambiente de desenvolvimento do projeto é dividido em serviços operando em co
 - Docker-Compose
 
 ### Passo-a-Passo
-- Faça o clone do repositório em um diretório na sua máquina
-    - `git clone https://github.com/pds-team-leader/linhas-de-cuidado.git`
+- Faça um fork deste repositório (`pds-team-leader/linhas-de-cuidado`)
+- Faça o clone do repositório `seu_usuario/linhas-de-cuidado` em um diretório na sua máquina:
+    - `git clone https://github.com/SEU_USUARIO/linhas-de-cuidado.git`
     - `cd linhas-de-cuidado`
     
-- Adicione o repositório remoto aos seus remotes
+- Adicione o "repositório raiz" (pds-team-leader/linhas-de-cuidado) aos seus remotes:
     - `git remote add pds-ldc https://github.com/pds-team-leader/linhas-de-cuidado.git`
     
-- Use o Docker para construir as imagens do ambiente
+- Use o Docker para construir as imagens do ambiente:
     - `docker-compose build`
     - `docker-compose up`
     
