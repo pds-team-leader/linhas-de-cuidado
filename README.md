@@ -19,6 +19,6 @@
     - `docker-compose up`
     
 A princípio, os serviços de Front-End e Back-End serão entregues nas portas 
-`https://localhost:8080```
+https://localhost:8080
 e
-`https://localhost:3000`, respectivamente
+https://localhost:3000, respectivamente
