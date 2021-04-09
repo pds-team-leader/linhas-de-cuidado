@@ -56,4 +56,5 @@ Esse é o repositório no qual você realizará seus *commits* e *pushes*:
 - O exemplo da imagem acima é um caso excepcional em que se realiza o *merge* das branches **"main"** de cada repositório. Você **NÃO DEVE** fazer o *merge* com a main.
 - Ao Criar um novo CARD ou Épico é criada uma branch equivalente no *repositório raíz*, você deve realizar o *merge* da branch de seu CARD no *repositório fork* para a branch equivalente no *repositório raíz*:
 ![image](https://user-images.githubusercontent.com/81944783/114239862-a0434d80-9954-11eb-9d8f-4ae5167b38d3.png)
-
+- Antes mesmo de criar sua *Pull Request* e requisitar a avaliação de outros desenvolvedores, você pode fazer o *review* de seu próprio código e adicionar commits com correções, caso necessário. Feito isso, basta clicar em **"Create Pull Request"**.
+- Você verá que já pode realizar o *merge*, no entanto, é recomendado que marque colegas e peça a avaliação de pelo menos 2 pessoas, que deverão aprovar a *PR*, antes de fazer o *merge*.
