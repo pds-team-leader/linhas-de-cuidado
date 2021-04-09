@@ -3,15 +3,15 @@
 ## Descrição do ambiente
 O ambiente de desenvolvimento do projeto é dividido em serviços operando em containers, orquestrados com Docker-Compose. Estes são:
 #### DataBase
-- PostgreSQL: Banco de dados relacional
+- PostgreSQL: Banco de dados relacional.
 #### Back-end (/api)
-- NodeJS: Interpretador de Javascript
-- Express, CORS: Bibliotecas para requisições HTTP
-- Knex: Biblioteca para gerenciamento de migrations e utilidades relacionadas ao DB
+- NodeJS: Interpretador de Javascript;
+- Express, CORS: Bibliotecas para requisições HTTP;
+- Knex: Biblioteca para gerenciamento de migrations e utilidades relacionadas ao DB.
 #### Front-end (/app)
-- NodeJS: Interpretador de Javascript
-- VueJS: Framework para desenvolvimento de interfaces
-- Axios: Biblioteca para integração com API
+- NodeJS: Interpretador de Javascript;
+- VueJS: Framework para desenvolvimento de interfaces;
+- Axios: Biblioteca para integração com APIs.
 
 ## Instalação
 
