@@ -1,5 +1,18 @@
 # Linhas de Cuidado - Diabetes Mellitus e Hipertensão Arterial
 
+## Descrição do ambiente
+O ambiente de desenvolvimento do projeto é dividido em serviços operando em containers, orquestrados com Docker-Compose. Estes são:
+#### DataBase
+- PostgreSQL: Banco de dados relacional
+#### Back-end (/api)
+- NodeJS: Interpretador de Javascript
+- Express, CORS: Bibliotecas para requisições HTTP
+- Knex: Biblioteca para gerenciamento de migrations e utilidades relacionadas ao DB
+#### Front-end (/app)
+- NodeJS: Interpretador de Javascript
+- VueJS: Framework para desenvolvimento de interfaces
+- Axios: Biblioteca para integração com API
+
 ## Instalação
 
 ### Requisitos
@@ -21,4 +34,4 @@
 A princípio, os serviços de Front-End e Back-End serão entregues nas portas 
 https://localhost:8080
 e
-https://localhost:3000, respectivamente
+https://localhost:3000, respectivamente.
