@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  api:
+    image: node:14
+    working_dir: /app
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./api:/app
+    depends_on:
+      - db
+    command: bash -c "npm install && npm start"
+    container_name: api
+
+  web:
+    image: node:14
+    working_dir: /app
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./app:/app
+    depends_on:
+      - api
+    command: bash -c "npm install && npm run serve"
+    container_name: web
+
+  db:
+    image: 'postgres'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+    - ./.db:/var/lib/postgresql/data
+    container_name: db
