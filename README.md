@@ -9,7 +9,7 @@
 ### Passo-a-Passo
 - Faça o clone do repositório em um diretório na sua máquina
     ```git clone https://github.com/pds-team-leader/linhas-de-cuidado.git```
-    `cd linhas-de-cuidado```
+    ``cd linhas-de-cuidado``
     
 - Adicione o repositório remoto aos seus remotes
     ```git remote add pds-ldc https://github.com/pds-team-leader/linhas-de-cuidado.git```
