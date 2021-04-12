@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors');
 const morgan = require('morgan')
 
-const db = require('./db')
+const db = require('../db')
 
 const PORT = process.env.PORT || 3000
 const app = express()
