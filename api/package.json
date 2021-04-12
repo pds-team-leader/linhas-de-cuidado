@@ -2,18 +2,23 @@
   "name": "docker-tut",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.21.18",
     "morgan": "^1.10.0",
     "pg": "^8.5.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "sonarqube-scanner": "^2.8.0"
+  },
   "scripts": {
-    "start": "node server.js",
     "migrate": "node scripts/migrate.js",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "sonar": "node sonar-project.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
