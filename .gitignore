@@ -4,6 +4,7 @@ package-lock.json
 /dist
 .scannerwork
 .db
+coverage
 
 
 # local env files

@@ -15,8 +15,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-let teste = 1;
-
 app.get('/users', async (req, res) => {
   const users = await db.select().from('users')
   res.json(users)
@@ -27,4 +25,11 @@ app.post('/users', async (req, res) => {
   res.json(user)
 })
 
-app.listen(PORT, () => console.log(`Server up at http://localhost:${PORT}`))
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Server up at http://localhost:${PORT}`)
+  });
+}
+
+module.exports = app
