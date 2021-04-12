@@ -40,10 +40,22 @@ https://localhost:3000, respectivamente.
 ## Guia de Uso
 
 #### Criando um CARD
-// to do
+- Para inserir um novo Card, certifique-se de estar *up to date* com a master e em seguida insira uma nova Branch correspondente ao seu Card.
+    - `git fetch linhas-de-cuidado master`
+    - `git checkout -b CARD-XX linhas-de-cuidado/master`
 
 #### Criando um Épico
-// to do
+- Algumas tarefas podem ser grandes demais, ou ter dependencias entre setores diferentes, de forma que as entregas são dependentes entre si e, portanto, funcionam melhor agrupadas.
+- A uma tarefa dessa proporção chamamos de Épico. Seus Cards se juntarão ao épico, que uma vez pronto, será incorporado na Master.
+- Sendo assim, ao criar um novo Card para trabalhar, você o criará a partir do Card Épico, não da master, e ao entregá-lo pronto, você fará o merge em direção ao épico, não à Master.
+    - `git fetch linhas-de-cuidado CARD-XX`
+    - `git checkout -b CARD-XX linhas-de-cuidado/CARD-XX`
+
+#### Fazendo um commit
+- Para seus commits, tente seguir o padrão para evidenciar o CARD ao qual a sua adição se refere
+    - `git commit -m "[CARD-XX] - Adiciona nova funcionalidade"`
+- Em seguida, você realizará o *push* para seu repositório remoto (o *fork*)
+    - `git push origin CARD-XX`
 
 #### Pull Requests 
 - Ao clonar o repositório Fork em sua máquina, o git criará automaticamente um *remote __origin__*, que aponta para o repositório *seu_usuario/linhas-de-cuidado*.
