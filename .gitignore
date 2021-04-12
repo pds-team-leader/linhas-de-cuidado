@@ -2,6 +2,9 @@
 node_modules
 package-lock.json
 /dist
+.scannerwork
+.db
+coverage
 
 
 # local env files

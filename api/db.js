@@ -1,4 +1,4 @@
-const knex = require('knex')
+const knex = require('knex');
 
 module.exports = knex({
   client: 'postgres',
@@ -8,4 +8,4 @@ module.exports = knex({
     password: 'postgres',
     database: 'postgres',
   },
-})
+});
