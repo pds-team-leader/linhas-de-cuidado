@@ -6,6 +6,4 @@ sonarqubeScanner({
     'sonar.tests': '.',
     'sonar.inclusions' : '**', // Entry point of your code
     'sonar.test.inclusions': 'src/**/*.spec.js,src/**/*.spec.jsx,src/**/*.test.js,src/**/*.test.jsx',
-    'sonar.login': 'admin',
-    'sonar.password': 'admin'
 }}, () => {console.log('Escaneamento finalizado');});
