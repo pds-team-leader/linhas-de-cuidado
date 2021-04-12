@@ -3,6 +3,7 @@ version: '3.3'
 services:
   api:
     image: node:14
+    container_name: api
     working_dir: /app
     ports:
       - '3000:3000'
@@ -10,11 +11,11 @@ services:
       - ./api:/app
     depends_on:
       - db
-    command: bash -c "npm install && npm start"
-    container_name: api
+    command: bash -c "npm install && npm run dev"
 
   web:
     image: node:14
+    container_name: web
     working_dir: /app
     ports:
       - '8080:8080'
@@ -23,13 +24,59 @@ services:
     depends_on:
       - api
     command: bash -c "npm install && npm run serve"
-    container_name: web
 
   db:
-    image: 'postgres'
+    image: postgres
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-    - ./.db:/var/lib/postgresql/data
+      - ./.db:/var/lib/postgresql/data
     container_name: db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "5050:5050"
+
+  sonarqube:
+    image: sonarqube:8.2-community
+    depends_on:
+      - db_sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://db_sonarqube:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_temp:/opt/sonarqube/temp
+    container_name: sonarqube
+
+  db_sonarqube:
+    image: postgres
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
+    volumes:
+      - postgresql:/var/lib/postgresql
+      # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+      - postgresql_data:/var/lib/postgresql/data
+    container_name: db_sonarqube
+    
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_temp:
+  postgresql:
+  postgresql_data: 

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    {{ mensagem }}
+    Mensagem do Servidor: {{ mensagem }}
   </div>
 </template>
 
@@ -16,8 +16,10 @@ export default {
     };
   },
   mounted() {
-    this.mensagem = api.get('http://localhost:8000/');
-    console.log(this.mensagem);
+    api.get('http://localhost:3000')
+      .then((response) => {
+        this.mensagem = response.data;
+      });
   },
 };
 </script>
