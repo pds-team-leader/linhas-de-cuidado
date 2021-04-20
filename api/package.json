@@ -9,8 +9,7 @@
     "express": "^4.17.1",
     "knex": "^0.21.18",
     "morgan": "^1.10.0",
-    "pg": "^8.5.1",
-    "sonarqube-scanner": "^2.8.0"
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "eslint": "^7.24.0",
@@ -23,7 +22,6 @@
   },
   "scripts": {
     "seed": "node scripts/seed.js",
-    "sonar": "node sonar-project.js",
     "dev": "nodemon src/server.js",
     "test": "NODE_ENV=test jest --coverage --forceExit --detectOpenHandles",
     "migrate": "node scripts/migrate.js"
