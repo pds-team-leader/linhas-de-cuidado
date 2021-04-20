@@ -33,7 +33,7 @@ O ambiente de desenvolvimento do projeto é dividido em serviços operando em co
     - `docker-compose up`
     
 A princípio, os serviços de Front-End e Back-End serão entregues nas portas 
-http://localhost:8080
+http://localhost:8000
 e
 http://localhost:3000, respectivamente.
 
