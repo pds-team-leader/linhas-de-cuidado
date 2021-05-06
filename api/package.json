@@ -9,7 +9,8 @@
     "express": "^4.17.1",
     "knex": "^0.21.18",
     "morgan": "^1.10.0",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "sequelize": "^6.6.2"
   },
   "devDependencies": {
     "eslint": "^7.24.0",

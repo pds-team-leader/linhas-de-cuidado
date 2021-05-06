@@ -7,6 +7,11 @@
 <script>
 
 import api from './services/api';
+import urls from './endpoints/urls';
+
+const {
+  HOME,
+} = urls;
 
 export default {
   name: 'App',
@@ -16,7 +21,7 @@ export default {
     };
   },
   mounted() {
-    api.get('http://localhost:3000')
+    api.get(HOME)
       .then((response) => {
         this.mensagem = response.data;
       });
