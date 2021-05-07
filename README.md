@@ -11,7 +11,7 @@ O ambiente de desenvolvimento do projeto é dividido em serviços operando em co
 #### Front-end (/app)
 - NodeJS: Interpretador de Javascript;
 - VueJS: Framework para desenvolvimento de interfaces;
-- Axios: Biblioteca para integração com APIs.
+- Axios: Biblioteca para integração com APIs. 
 
 ## Instalação
 
