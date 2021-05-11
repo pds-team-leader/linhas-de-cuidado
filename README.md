@@ -7,7 +7,7 @@ O ambiente de desenvolvimento do projeto é dividido em serviços operando em co
 #### Back-end (/api)
 - NodeJS: Interpretador de Javascript;
 - Express, CORS: Bibliotecas para requisições HTTP;
-- Knex: Biblioteca para gerenciamento de migrations e utilidades relacionadas ao DB.
+- Sequelize: Biblioteca para gerenciamento de migrations e utilidades relacionadas ao DB.
 #### Front-end (/app)
 - NodeJS: Interpretador de Javascript;
 - VueJS: Framework para desenvolvimento de interfaces;
