@@ -3,6 +3,6 @@ const databaseConfig = require('../config/database');
 
 const connection = new Sequelize(databaseConfig);
 
-connection.sync({force: true});
+connection.sync();
 
 module.exports = connection;

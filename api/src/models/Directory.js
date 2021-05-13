@@ -33,6 +33,11 @@ class Directory extends Model {
             allowNull: false,
             defaultValue: "Diretório"
         },
+        guide: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
     });
  
 module.exports = Directory;
