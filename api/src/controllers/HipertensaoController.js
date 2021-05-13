@@ -48,6 +48,8 @@ module.exports = {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
+    } else if (directory.guide != 2) {
+      return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
     directory.title = title;
@@ -70,6 +72,8 @@ module.exports = {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
+    } else if (directory.guide != 2) {
+      return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
     try {
