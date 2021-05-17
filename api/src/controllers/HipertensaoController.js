@@ -1,6 +1,6 @@
 import Directory from '../models/Directory';
 
-module.exports = {
+export default {
 
   async store(req, res) {
     const { title } = req.body;
