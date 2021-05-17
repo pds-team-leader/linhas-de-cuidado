@@ -1,6 +1,6 @@
-const express = require('express');
-const DiabetesController = require('./controllers/DiabetesController');
-const HipertensaoController = require('./controllers/HipertensaoController');
+import express from 'express';
+import DiabetesController from './controllers/DiabetesController';
+import HipertensaoController from './controllers/HipertensaoController';
 
 const routes = express.Router();
 
@@ -18,4 +18,4 @@ routes.get('/hipertensao/:id', HipertensaoController.indexOne);
 routes.put('/hipertensao/:id', HipertensaoController.update);
 routes.delete('/hipertensao/:id', HipertensaoController.delete);
 
-module.exports = routes;
+export default routes;
