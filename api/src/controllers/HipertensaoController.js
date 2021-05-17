@@ -1,4 +1,4 @@
-const Directory = require('../models/Directory');
+import Directory from '../models/Directory';
 
 module.exports = {
 
