@@ -1,6 +1,6 @@
-const {Model, DataTypes } = require('sequelize');
-const Sequelize = require('sequelize');
-const connection = require('../database/index');
+import {Model, DataTypes } from 'sequelize';
+import Sequelize from 'sequelize';
+import connection from '../database/index';
 /*
 class Directory extends Model {
     static init(connection){
