@@ -54,7 +54,7 @@ export default {
     try {
       await publication.save();
     } catch (error) {
-      return res.statys(400).json({
+      return res.status(400).json({
         erro: `Falha ao atualizar a publicação: ${error}`,
       });
     }
