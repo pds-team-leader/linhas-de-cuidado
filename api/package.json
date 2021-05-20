@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.3",
     "cors": "^2.8.5",
     "eslint-plugin-jest": "^24.3.5",
     "express": "^4.17.1",
