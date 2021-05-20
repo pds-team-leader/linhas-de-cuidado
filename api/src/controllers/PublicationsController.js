@@ -10,16 +10,6 @@ export default {
     return res.json(publication);
   },
 
-  async indexAllFromDirectory(req, res) {
-    const { directoryId } = req.params;
-    const publication = await Publication.findAll({ where: { directoryId } });
-
-    if (!publication) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
-    }
-    return res.json(publication);
-  },
-
   async indexOne(req, res) {
     const { id } = req.params;
     const publication = await Publication.findByPk(id);
@@ -31,9 +21,13 @@ export default {
   },
 
   async store(req, res) {
-    const { title, description, isFromGuide } = req.body;
+    const {
+      title, description, isFromGuide,
+    } = req.body;
 
-    const publication = await Publication.create({ title, description, isFromGuide });
+    const publication = await Publication.create({
+      title, description, isFromGuide,
+    });
 
     if (!publication) {
       return res.json({ erro: 'Erro ao criar publicação' });
@@ -42,7 +36,9 @@ export default {
   },
 
   async update(req, res) {
-    const { title, description, isFromGuide } = req.body;
+    const {
+      title, description, isFromGuide,
+    } = req.body;
     const { id } = req.params;
 
     const publication = await Publication.findByPk(id);
@@ -72,8 +68,17 @@ export default {
     const publication = await Publication.findByPk(id);
 
     if (!publication) {
-      return res.status(400).json({ erro: 'Publicação não encontrada' });
+      return res.status(400).json({ erro: 'Publicação não encontrado.' });
     }
+
+    try {
+      publication.destroy();
+    } catch (error) {
+      return res.status(400).json({
+        erro: `Falha ao apagar a publicação: ${error}`,
+      });
+    }
+
     return res.json(publication);
   },
 };
