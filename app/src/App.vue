@@ -1,63 +1,82 @@
 <template>
-<v-app>
-  <v-navigation-drawer app>
-    <!-- -->
-  </v-navigation-drawer>
+  <v-app id="app">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+    </v-navigation-drawer>
 
-  <v-app-bar app>
-    <!-- -->
-  </v-app-bar>
+    <v-app-bar app>
+      <v-app-bar-nav-icon color="primary" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>
+        <span class="title">Linhas de cuidado</span>
+      </v-toolbar-title>
+    </v-app-bar>
 
-  <!-- Sizes your content based upon application components -->
-  <v-main>
-
-    <!-- Provides the application the proper gutter -->
-    <v-container fluid>
-    Mensagem do Servidor: {{ mensagem }}
-
-      <!-- If using vue-router -->
+    <v-main>
+      <v-header />
       <router-view></router-view>
-    </v-container>
-  </v-main>
+    </v-main>
 
-  <v-footer app>
-    <!-- -->
-  </v-footer>
-</v-app>
+    <v-footer
+      color="primary"
+      class="justify-center"
+    >
+    <div class='footer-container'>
+      <img src="./assets/logo-footer.svg"/>
+        <p class="footer-text">
+          Universidade Federal de Mato Grosso do Sul. Copyright © 2021
+      </p>
+    </div>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
 
-import api from './services/api';
-import urls from './endpoints/urls';
-
-const {
-  HOME,
-} = urls;
+import VHeader from './components/Header.vue';
 
 export default {
-  name: 'App',
+
+  components: {
+    VHeader,
+  },
   data() {
     return {
-      mensagem: '',
+      drawer: null,
     };
-  },
-  mounted() {
-    api.get(HOME)
-      .then((response) => {
-        this.mensagem = response.data;
-      });
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Poppins, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.title{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  color: #3988B8;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .footer-text {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.75px;
+    color: #FFFFFF;
+    margin: 0;
+  }
 }
 </style>
