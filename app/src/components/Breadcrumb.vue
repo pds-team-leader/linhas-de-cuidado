@@ -1,12 +1,16 @@
 <template>
 <div>
 
-    <v-breadcrumbs divider=">" :items="breadcrumbs">
+    <v-breadcrumbs
+      divider=">"
+      :items="breadcrumbs"
+    >
       <template v-slot:item="{ item }">
       <v-breadcrumbs-item
         v-if="item.text === 'Home'"
         :href="item.href"
         :disabled="item.disabled"
+        ripple
       >
         <v-img src="../assets/Home.svg"/>
       </v-breadcrumbs-item>
@@ -15,6 +19,7 @@
         v-else
         :href="item.href"
         :disabled="item.disabled"
+        ripple
       >
         {{item.text}}
       </v-breadcrumbs-item>
