@@ -5,9 +5,13 @@ name: Jest + SonarCloud - NodeJS CI
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - '**'        # todas as branches
+      - '!documentacao'   # exceto documentacao
   pull_request:
-    branches: [ main ]
+    branches: 
+      - '**'        # todas as branches
+      - '!documentacao'   # exceto documentacao
 defaults:
   run:
     working-directory: api
