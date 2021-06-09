@@ -50,7 +50,7 @@ jobs:
       run: npx sequelize db:migrate
       
     - name: Connect to PostgreSQL
-      run: node server.js
+      run: node client.js
       env:
         POSTGRES_HOST: db
         POSTGRES_PORT: 5432
