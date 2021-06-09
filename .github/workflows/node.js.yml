@@ -16,13 +16,16 @@ jobs:
 
   db:
     runs-on: ubuntu-latest
-    container: node:10.18-jessie
+    container: node:14.x
     
     services:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
           options: >-
             --health-cmd pg_isready
             --health-interval 10s
