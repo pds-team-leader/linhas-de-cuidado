@@ -13,15 +13,11 @@ defaults:
   run:
     working-directory: api
 jobs:
-  build:
 
+  db:
     runs-on: ubuntu-latest
+    container: node:10.18-jessie
     
-    strategy:
-      matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-       
     services:
       postgres:
         image: postgres
@@ -33,18 +29,9 @@ jobs:
             --health-timeout 5s
             --health-retries 5
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }} 
-        
-    - name: Install dependencies
-      run: npm ci
-      
     - name: Create Database
       run: npx sequelize db:create
-    
+      
     - name: Migrate Database
       run: npx sequelize db:migrate
       
@@ -54,6 +41,24 @@ jobs:
         POSTGRES_HOST: db
         POSTGRES_PORT: 5432
         
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+ 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }} 
+        
+    - name: Install dependencies
+      run: npm ci
+
     - name: Build
       run: npm run build --if-present
       
