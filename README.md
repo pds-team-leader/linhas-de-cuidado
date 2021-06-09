@@ -1,6 +1,6 @@
 # Linhas de Cuidado - Diabetes Mellitus e Hipertensão Arterial 
 
-## Descrição do ambiente
+## Descrição do ambiente 
 O ambiente de desenvolvimento do projeto é dividido em serviços operando em containers, orquestrados com Docker-Compose. Estes são:
 #### DataBase
 - PostgreSQL: Banco de dados relacional.
