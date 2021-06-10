@@ -35,10 +35,11 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "collectCoverage": true,
+    "testResultsProcessor": "jest-sonar-reporter",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ],
-    "testResultsProcessor": "jest-sonar-reporter"
+    ]
   },
   "jestSonar": {
     "reportPath": "coverage",
