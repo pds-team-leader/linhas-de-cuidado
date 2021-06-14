@@ -4,10 +4,8 @@
     elevation="2"
   >
     <v-slide-group
-      v-model="model"
       class="py-2 px-2"
       center-active
-      show-arrows="false"
     >
       <v-slide-item
         v-for="option in options"
