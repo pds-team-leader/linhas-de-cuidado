@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const routes = require('./routes');
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import routes from './routes';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -21,4 +21,4 @@ if (process.env.NODE_ENV !== 'test') {
   });
 } 
 
-module.exports = app;
+export default app;

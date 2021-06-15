@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 
 const DiabetesController = require('./controllers/DiabetesController');
 const HipertensaoController = require('./controllers/HipertensaoController');
@@ -32,4 +32,4 @@ routes.get('/hipertensao/:id', authMiddleware, HipertensaoController.indexOne);
 routes.put('/hipertensao/:id', authMiddleware, HipertensaoController.update);
 routes.delete('/hipertensao/:id', authMiddleware, HipertensaoController.delete);
 
-module.exports = routes;
+export default routes;
