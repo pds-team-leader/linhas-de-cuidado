@@ -1,8 +1,8 @@
 module.exports = {
   dialect: 'postgres',
-  host: 'db',
-  username: 'postgres',
-  password: 'postgres',
+  host: process.env.PG_HOST,
+  username: process.env.PG_USERNAME,
+  password: process.env.PG_PASSWORD,
   database: 'linhas-de-cuidado-db',
   define: {
     timestamps: true,
