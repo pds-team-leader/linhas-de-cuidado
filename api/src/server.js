@@ -13,11 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
+require('./controllers/AuthController')(app);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`Server up at http://localhost:${PORT}`);
   });
-}
+} 
 
 export default app;
