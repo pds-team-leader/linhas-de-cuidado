@@ -41,7 +41,9 @@ jobs:
         run: npm ci
 
       - name: Database Migration
-        run: npx sequelize db:migrate
+        run: npx sequelize db:drop 
+          && npx sequelize db:create
+          && npx sequelize db:migrate
         env:
           PG_HOST: postgres
           PG_PORT: 5432
