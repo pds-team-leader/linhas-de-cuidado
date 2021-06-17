@@ -8,6 +8,7 @@ on:
 
 jobs:
 
+
   build:
     runs-on: ubuntu-latest
     defaults:
@@ -15,16 +16,19 @@ jobs:
         working-directory: ./api
     container: node:14
 
+
     services:
       postgres:
         image: postgres
         env:
           POSTGRES_PASSWORD: postgres
+
           options: >-
             --health-cmd pg_isready
             --health-interval 10s
             --health-timeout 5s
             --health-retries 5
+
             
     steps:
       - name: Check out repository code
@@ -54,3 +58,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
