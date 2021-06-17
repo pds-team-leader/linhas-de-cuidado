@@ -145,4 +145,45 @@ describe('Endpoints CRUD de Diretórios', () => {
     expect(response.body.length).toBeGreaterThanOrEqual(2);
     done();
   });
+
+  it('Retorna erro ao criar diretório inválido', async (done) => {
+    const resDiabetes = await request
+      .post('/diabetes')
+      .send({
+        title: null,
+        guide: 0,
+      });
+
+    const resHipertensao = await request
+      .post('/hipertensao')
+      .send({
+        title: null,
+        guide: 0,
+      });
+
+    expect(resDiabetes.status).toBe(400);
+    expect(resHipertensao.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao atualizar diretório inexistente', async (done) => {
+    const resDiabetes = await request.put('/diabetes/-1');
+    const resHipertensao = await request.put('/hipertensao/-1');
+
+    expect(resDiabetes.status).toBe(400);
+    expect(resHipertensao.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao apagar diretório inexistente', async (done) => {
+    const resDiabetes = await request.delete('/diabetes/-1');
+    const resHipertensao = await request.delete('/hipertensao/-1');
+
+    expect(resDiabetes.status).toBe(400);
+    expect(resHipertensao.status).toBe(400);
+
+    done();
+  });
 });

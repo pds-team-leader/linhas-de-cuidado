@@ -5,9 +5,11 @@ export default {
   async store(req, res) {
     const { title } = req.body;
     const guide = 2;
-    const directory = await Directory.create({ title, guide });
+    let directory;
 
-    if (!directory) {
+    try {
+      directory = await Directory.create({ title, guide });
+    } catch (error) {
       return res.status(400).json({ erro: 'Falha ao criar novo Diretório.' });
     }
 
@@ -17,8 +19,8 @@ export default {
   async indexAll(req, res) {
     const directory = await Directory.findAll({
       where: {
-        guide: 2
-      }
+        guide: 2,
+      },
     });
 
     if (!directory) {
@@ -48,7 +50,7 @@ export default {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide != 2) {
+    } if (directory.guide != 2) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
@@ -72,7 +74,7 @@ export default {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide != 2) {
+    } if (directory.guide != 2) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
