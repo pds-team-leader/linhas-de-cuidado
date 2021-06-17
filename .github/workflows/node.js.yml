@@ -1,11 +1,6 @@
 name: Jest + SonarCloud - NodeJS CI
 
 on:
-  push:
-    branches: 
-      - '**'
-      - '!documentacao'
-
   pull_request:
     branches: 
       - '**'
