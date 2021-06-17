@@ -14,7 +14,7 @@
         ></v-img>
         <v-card-title>Guia Diabetes Mellitus</v-card-title>
         <v-card-text>Manejo clínico na atenção primária à saúde.</v-card-text>
-        <v-btn class="mb-6" color="primary">Saber mais</v-btn>
+        <v-btn class="mb-6" color="primary" to="/guia-diabetes">Saber mais</v-btn>
       </v-card>
 
       <v-card
@@ -27,7 +27,7 @@
         ></v-img>
         <v-card-title>Guia Hipertensão Arterial</v-card-title>
         <v-card-text>Manejo clínico na atenção primária à saúde.</v-card-text>
-        <v-btn class="mb-6" color="primary">Saber mais</v-btn>
+        <v-btn class="mb-6" color="primary" to="/guia-hipertensao">Saber mais</v-btn>
       </v-card>
 
       <v-card
@@ -40,7 +40,7 @@
         ></v-img>
         <v-card-title>Conteúdos Extras</v-card-title>
         <v-card-text>Videos, podcasts, artigos e diversos conteúdos.</v-card-text>
-        <v-btn class="mb-6" color="primary">Saber mais</v-btn>
+        <v-btn class="mb-6" color="primary" to="/conteudo-extra">Saber mais</v-btn>
       </v-card>
     </div>
 
