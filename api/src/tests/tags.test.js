@@ -75,4 +75,56 @@ describe('Endpoints CRUD de tags', () => {
     expect(response.body.length).toBeGreaterThanOrEqual(2);
     done();
   });
+
+  it('Lê todas as publicações existentes', async (done) => {
+    await request
+      .post('/publications')
+      .send({
+        title: 'Título Teste 1',
+        description: 'Descrição Teste 1',
+        isFromGuide: true,
+      });
+
+    await request
+      .post('/publications')
+      .send({
+        title: 'Título Teste 2',
+        description: 'Descrição Teste 2',
+        isFromGuide: true,
+      });
+
+    const response = await request.get('/publications');
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBeGreaterThanOrEqual(2);
+    done();
+  });
+  it('Retorna erro ao criar tag inválida', async (done) => {
+    const response = await request
+      .post('/tag')
+      .send({
+        text: null,
+        link: null,
+      });
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao atualizar tag inexistente', async (done) => {
+    const response = await request.put('/tag/-1');
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao apagar tag inexistente', async (done) => {
+    const resHipertensao = await request.delete('/tag/-1');
+
+    expect(resHipertensao.status).toBe(400);
+
+    done();
+  });
 });
