@@ -1,6 +1,6 @@
 module.exports = {
   dialect: 'postgres',
-  host: process.env !== 'development' ? 'postgres' : process.env.PG_HOST,
+  host: db,
   username: 'postgres',
   password: 'postgres',
   database: 'postgres',
