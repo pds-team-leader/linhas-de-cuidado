@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     class="header"
-    height="136"
+    height="236"
     flat
     align='center'
   >
@@ -12,22 +12,24 @@
     >
       O que você procura?
     </p>
-    <v-autocomplete
-      slot="extension"
-      v-model="select"
-      :loading="isLoading"
-      :items="items"
-      :search-input.sync="search"
-      cache-items
-      append-icon=""
-      class="mx-4"
-      hide-no-data
-      hide-details
-      label="Pesquisar"
-      solo
-      dense
-      clearable
-    ></v-autocomplete>
+    <v-col cols="6" sm="6" md="6">
+      <v-autocomplete
+        slot="extension"
+        v-model="select"
+        :loading="isLoading"
+        :items="items"
+        :search-input.sync="search"
+        cache-items
+        append-icon=""
+        class="mx-4"
+        hide-no-data
+        hide-details
+        label="Pesquisar"
+        solo
+        dense
+        clearable
+      ></v-autocomplete>
+    </v-col>
   </v-col>
   </v-app-bar>
 </template>
@@ -80,7 +82,7 @@ export default {
 
   .title {
     font-weight: normal;
-    font-size: 24px;
+    font-size: 34px !important;
     line-height: 32px;
     color: #FFFFFF;
   }

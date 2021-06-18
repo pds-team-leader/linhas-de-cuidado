@@ -48,7 +48,10 @@ export default {
           name: 'Exame',
         },
         {
-          name: 'Tratamento',
+          name: 'Tratamento farmacológico',
+        },
+        {
+          name: 'Tratamento não farmacológico',
         },
         {
           name: 'Complicações',
@@ -58,6 +61,18 @@ export default {
         },
         {
           name: 'Avaliação',
+        },
+        {
+          name: 'Insulina',
+        },
+        {
+          name: 'Monitoramento',
+        },
+        {
+          name: 'Rastreamento',
+        },
+        {
+          name: 'Comorbidades',
         },
       ],
     };
