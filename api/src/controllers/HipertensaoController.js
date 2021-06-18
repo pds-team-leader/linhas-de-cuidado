@@ -5,9 +5,11 @@ export default {
   async store(req, res) {
     const { title } = req.body;
     const guide = 2;
-    const directory = await Directory.create({ title, guide });
+    let directory;
 
-    if (!directory) {
+    try {
+      directory = await Directory.create({ title, guide });
+    } catch (error) {
       return res.status(400).json({ erro: 'Falha ao criar novo Diretório.' });
     }
 
