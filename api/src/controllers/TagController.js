@@ -22,12 +22,12 @@ export default {
 
   async store(req, res) {
     const { text, link } = req.body;
-    const tag = await Tag.create({
-      text, link,
-    });
+    let tag;
 
-    if (!tag) {
-      return res.json({ erro: 'Erro ao criar tag' });
+    try {
+      tag = await Tag.create({ text, link });
+    } catch (error) {
+      return res.status(400).json({ erro: `Falha ao criar nova Tag: ${error}` });
     }
     return res.json(tag);
   },
