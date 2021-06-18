@@ -14,6 +14,11 @@ const Directory = connection.define('Directory', {
     allowNull: false,
     defaultValue: 'Diretório',
   },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'Diretório',
+  },
   guide: {
     type: Sequelize.INTEGER,
     allowNull: false,
