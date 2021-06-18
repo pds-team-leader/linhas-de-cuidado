@@ -17,8 +17,8 @@ module.exports = {
   async indexAll(req, res) {
     const directory = await Directory.findAll({
       where: {
-        guide: 1
-      }
+        guide: 1,
+      },
     });
 
     if (!directory) {
@@ -48,7 +48,7 @@ module.exports = {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide != 1) {
+    } if (directory.guide != 1) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
@@ -72,7 +72,7 @@ module.exports = {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide != 1) {
+    } if (directory.guide != 1) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
