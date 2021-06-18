@@ -10,6 +10,10 @@ module.exports = {
       type: Sequelize.STRING(255),
       allowNull: false,
     },
+    description: {
+      type: Sequelize.STRING(255),
+      allowNull: false,
+    },
     guide: {
       type: Sequelize.INTEGER,
       allowNull: false,

@@ -3,12 +3,12 @@ import Directory from '../models/Directory';
 export default {
 
   async store(req, res) {
-    const { title } = req.body;
+    const { title, description } = req.body;
     const guide = 2;
     let directory;
 
     try {
-      directory = await Directory.create({ title, guide });
+      directory = await Directory.create({ title, description, guide });
     } catch (error) {
       return res.status(400).json({ erro: 'Falha ao criar novo Diretório.' });
     }
@@ -43,18 +43,19 @@ export default {
   },
 
   async update(req, res) {
-    const { title } = req.body;
+    const { title, description } = req.body;
     const { id } = req.params;
 
     const directory = await Directory.findOne({ where: { id } });
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } if (directory.guide != 2) {
+    } if (directory.guide !== 2) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
     directory.title = title;
+    directory.description = description;
 
     try {
       await directory.save();
@@ -74,7 +75,7 @@ export default {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } if (directory.guide != 2) {
+    } if (directory.guide !== 2) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 

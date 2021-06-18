@@ -1,4 +1,4 @@
-import Sequelize, { Model, DataTypes } from 'sequelize';
+import Sequelize from 'sequelize';
 
 import connection from '../database/index';
 
@@ -10,6 +10,11 @@ const Directory = connection.define('Directory', {
     primaryKey: true,
   },
   title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'Diretório',
+  },
+  description: {
     type: Sequelize.STRING,
     allowNull: false,
     defaultValue: 'Diretório',
