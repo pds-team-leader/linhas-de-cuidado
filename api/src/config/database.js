@@ -1,9 +1,9 @@
-export default {
+module.exports = {
   dialect: 'postgres',
   host: 'db',
   username: 'postgres',
   password: 'postgres',
-  database: 'linhas-de-cuidado-db',
+  database: 'postgres',
   define: {
     timestamps: true,
     underscored: true,
