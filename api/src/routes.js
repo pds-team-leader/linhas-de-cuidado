@@ -1,4 +1,5 @@
 import express from 'express';
+import TagController from './controllers/TagController';
 import PublicationsController from './controllers/PublicationsController';
 import DiabetesController from './controllers/DiabetesController';
 import HipertensaoController from './controllers/HipertensaoController';
@@ -23,5 +24,11 @@ routes.get('/hipertensao', HipertensaoController.indexAll);
 routes.get('/hipertensao/:id', HipertensaoController.indexOne);
 routes.put('/hipertensao/:id', HipertensaoController.update);
 routes.delete('/hipertensao/:id', HipertensaoController.delete);
+
+routes.post('/tag', TagController.store);
+routes.get('/tag', TagController.indexAll);
+routes.get('/tag/:id', TagController.indexOne);
+routes.put('/tag/:id', TagController.update);
+routes.delete('/tag/:id', TagController.delete);
 
 export default routes;

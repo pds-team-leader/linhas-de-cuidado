@@ -79,4 +79,32 @@ describe('Endpoints CRUD de Publicações', () => {
     expect(response.body.length).toBeGreaterThanOrEqual(2);
     done();
   });
+  it('Retorna erro ao criar publicação inválida', async (done) => {
+    const response = await request
+      .post('/publications')
+      .send({
+        title: null,
+        description: null,
+      });
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao atualizar publicação inexistente', async (done) => {
+    const response = await request.put('/publications/-1');
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao apagar publicação inexistente', async (done) => {
+    const response = await request.delete('/publications/-1');
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
 });

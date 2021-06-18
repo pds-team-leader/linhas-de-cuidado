@@ -25,13 +25,14 @@ export default {
       title, description, isFromGuide,
     } = req.body;
 
-    const publication = await Publication.create({
-      title, description, isFromGuide,
-    });
+    let publication;
 
-    if (!publication) {
-      return res.json({ erro: 'Erro ao criar publicação' });
+    try {
+      publication = await Publication.create({ title, description, isFromGuide });
+    } catch (error) {
+      return res.status(400).json({ erro: `Falha ao criar nova Publicação: ${error}` });
     }
+
     return res.json(publication);
   },
 
