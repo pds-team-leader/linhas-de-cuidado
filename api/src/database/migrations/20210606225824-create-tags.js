@@ -1,21 +1,17 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => queryInterface.createTable('directories', {
+  up: async (queryInterface, Sequelize) => queryInterface.createTable('tags', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
     },
-    title: {
+    text: {
       type: Sequelize.STRING(255),
       allowNull: false,
     },
-    description: {
+    link: {
       type: Sequelize.STRING(255),
-      allowNull: false,
-    },
-    guide: {
-      type: Sequelize.INTEGER,
       allowNull: false,
     },
     created_at: {
@@ -28,5 +24,5 @@ module.exports = {
     },
   }),
 
-  down: async (queryInterface) => queryInterface.dropTable('directories'),
+  down: async (queryInterface) => queryInterface.dropTable('tags'),
 };

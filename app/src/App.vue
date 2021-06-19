@@ -9,13 +9,13 @@
     <v-app-bar app>
       <v-app-bar-nav-icon color="primary" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <span class="title">Linhas de cuidado</span>
+        <span class="title" @click="$router.push('/')">Linhas de cuidado</span>
       </v-toolbar-title>
     </v-app-bar>
 
     <v-main>
-      <v-header />
-      <router-view></router-view>
+      <v-header v-show="isHome"/>
+      <router-view ref="routerRef"></router-view>
     </v-main>
 
     <v-footer
@@ -43,8 +43,13 @@ export default {
   },
   data() {
     return {
-      drawer: null,
+      drawer: false,
     };
+  },
+  computed: {
+    isHome() {
+      return Boolean(this.$route.name === 'Home');
+    },
   },
 };
 </script>
@@ -59,6 +64,7 @@ export default {
 }
 
 .title{
+  cursor: pointer;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;

@@ -1,4 +1,4 @@
-# Linhas de Cuidado - Diabetes Mellitus e Hipertensão Arterial 
+# Linhas de Cuidado - Diabetes Mellitus e Hipertensão Arterial
 
 ## Descrição do ambiente
 O ambiente de desenvolvimento do projeto é dividido em serviços operando em containers, orquestrados com Docker-Compose. Estes são:
@@ -31,6 +31,7 @@ O ambiente de desenvolvimento do projeto é dividido em serviços operando em co
 - Use o Docker para construir as imagens do ambiente:
     - `docker-compose build`
     - `docker-compose up`
+    -teste
     
 A princípio, os serviços de Front-End e Back-End serão entregues nas portas 
 http://localhost:8000
