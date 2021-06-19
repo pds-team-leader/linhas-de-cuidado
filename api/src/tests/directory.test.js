@@ -11,6 +11,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/diabetes')
       .send({
         title: 'Título Teste',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -37,6 +38,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .put(`/diabetes/${testId}`)
       .send({
         title: 'Título Teste Alterado',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -59,6 +61,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/diabetes')
       .send({
         title: 'Título Teste',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -66,6 +69,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/diabetes')
       .send({
         title: 'Título Teste 2',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -81,6 +85,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/hipertensao')
       .send({
         title: 'Título Teste',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -107,6 +112,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .put(`/hipertensao/${testId}`)
       .send({
         title: 'Título Teste Alterado',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -129,6 +135,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/hipertensao')
       .send({
         title: 'Título Teste',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -136,6 +143,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/hipertensao')
       .send({
         title: 'Título Teste 2',
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -151,6 +159,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/diabetes')
       .send({
         title: null,
+        description: 'Descrição',
         guide: 0,
       });
 
@@ -158,6 +167,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .post('/hipertensao')
       .send({
         title: null,
+        description: 'Descrição',
         guide: 0,
       });
 
