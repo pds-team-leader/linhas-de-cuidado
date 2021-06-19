@@ -40,22 +40,6 @@ const routes = [
     },
     props: true,
   },
-  {
-    path: '/publicacoes/:guia/:id',
-    name: 'Publicacoes',
-    component: () => import('../components/Publication.vue'),
-    meta: {
-      breadcrumbs: [
-        {
-          text: 'Home',
-          route: '/',
-        },
-        {
-          text: 'Guia Hipertensão Arterial',
-        },
-      ],
-    },
-  },
 ];
 
 export default new VueRouter({
