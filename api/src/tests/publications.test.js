@@ -11,6 +11,7 @@ describe('Endpoints CRUD de Publicações', () => {
       .post('/publications')
       .send({
         title: 'Título Teste',
+        directory: 1,
         description: 'Descrição Teste',
         isFromGuide: false,
       });
@@ -38,6 +39,7 @@ describe('Endpoints CRUD de Publicações', () => {
       .put(`/publications/${testId}`)
       .send({
         title: 'Título Teste Alterado',
+        directory: 1,
         description: 'Descrição Teste Alterado',
         isFromGuide: true,
       });
@@ -61,6 +63,7 @@ describe('Endpoints CRUD de Publicações', () => {
       .post('/publications')
       .send({
         title: 'Título Teste 1',
+        directory: 1,
         description: 'Descrição Teste 1',
         isFromGuide: true,
       });
@@ -69,6 +72,7 @@ describe('Endpoints CRUD de Publicações', () => {
       .post('/publications')
       .send({
         title: 'Título Teste 2',
+        directory: 2,
         description: 'Descrição Teste 2',
         isFromGuide: true,
       });

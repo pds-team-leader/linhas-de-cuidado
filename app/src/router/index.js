@@ -38,7 +38,46 @@ const routes = [
         },
       ],
     },
-    props: true,
+  },
+  {
+    path: '/guia/diabetes/:id',
+    name: 'Diretorio',
+    component: () => import('../pages/Diretorio.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Guia de Diabetes Mellitus',
+          route: '/guia/diabetes',
+        },
+        {
+          text: 'Publicações',
+        },
+      ],
+    },
+  },
+  {
+    path: '/guia/hipertensao/:id',
+    name: 'Diretorio',
+    component: () => import('../pages/Diretorio.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Guia de Hipertensão Arterial',
+          route: '/guia/hipertensao',
+        },
+        {
+          text: 'Publicações',
+        },
+      ],
+    },
   },
 ];
 

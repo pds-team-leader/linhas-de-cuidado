@@ -56,7 +56,7 @@ export default {
   name: 'Guia',
   data() {
     return {
-      directories: [],
+      directories: '',
     };
   },
   computed: {
@@ -64,7 +64,7 @@ export default {
       return String(this.$route.name).toLowerCase();
     },
     overlay() {
-      return this.directories.length === 0;
+      return this.directories === '';
     },
   },
   methods: {
@@ -72,13 +72,12 @@ export default {
       const response = await api.get(`/${this.guia}`);
 
       this.directories = response.data;
-      console.log(this.directories);
     },
     goToPublications(id) {
-      this.$router.push(`/${this.guia}/${id}`);
+      this.$router.push(`/guia/${this.guia}/${id}`);
     },
     reset() {
-      this.directories = [];
+      this.directories = '';
     },
   },
   mounted() {
