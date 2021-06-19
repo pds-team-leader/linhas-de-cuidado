@@ -8,6 +8,10 @@ const Publication = connection.define('Publication', {
     allowNull: false,
     primaryKey: true,
   },
+  directory: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
   title: {
     type: Sequelize.STRING,
     allowNull: false,

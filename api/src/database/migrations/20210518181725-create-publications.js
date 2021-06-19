@@ -6,6 +6,10 @@ module.exports = {
       primaryKey: true,
       allowNull: false,
     },
+    directory: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+    },
     title: {
       type: Sequelize.STRING(255),
       allowNull: false,

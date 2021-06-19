@@ -20,15 +20,29 @@ export default {
     return res.json(publication);
   },
 
+  async indexAllFromDir(req, res) {
+    const { id } = req.params;
+    const publications = await Publication.findAll({
+      where: { directory: id },
+    });
+
+    if (!publications) {
+      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+    }
+    return res.json(publications);
+  },
+
   async store(req, res) {
     const {
-      title, description, isFromGuide,
+      title, directory, description, isFromGuide,
     } = req.body;
 
     let publication;
 
     try {
-      publication = await Publication.create({ title, description, isFromGuide });
+      publication = await Publication.create({
+        title, directory, description, isFromGuide,
+      });
     } catch (error) {
       return res.status(400).json({ erro: `Falha ao criar nova Publicação: ${error}` });
     }
@@ -38,7 +52,7 @@ export default {
 
   async update(req, res) {
     const {
-      title, description, isFromGuide,
+      title, directory, description, isFromGuide,
     } = req.body;
     const { id } = req.params;
 
@@ -49,6 +63,7 @@ export default {
     }
 
     publication.title = title;
+    publication.directory = directory;
     publication.description = description;
     publication.isFromGuide = isFromGuide;
 
