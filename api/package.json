@@ -9,7 +9,6 @@
     "dotenv": "^10.0.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "eslint-plugin-jest": "^24.3.5",
     "express": "^4.17.1",

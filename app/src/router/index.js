@@ -79,6 +79,28 @@ const routes = [
       ],
     },
   },
+  {
+    path: '/',
+    name: 'Login',
+    component: () => import('../pages/Login.vue'),
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../pages/Login.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Login',
+          route: '/',
+        },
+        {
+          text: 'Login',
+        },
+      ],
+    },
+    props: true,
+  },
 ];
 
 export default new VueRouter({
