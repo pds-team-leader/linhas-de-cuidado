@@ -1,43 +1,36 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list-item>teste</v-list-item>
     </v-navigation-drawer>
 
     <v-app-bar app>
       <v-app-bar-nav-icon color="primary" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <span class="title" @click="$router.push('/')">Linhas de cuidado</span>
+        <span class="title" @click="$router.push('/')">Linhas de Cuidado</span>
       </v-toolbar-title>
     </v-app-bar>
 
     <v-main>
-      <v-header v-show="isHome"/>
+      <v-header v-show="isHome" />
       <router-view ref="routerRef"></router-view>
     </v-main>
 
-    <v-footer
-      color="primary"
-      class="justify-center"
-    >
-    <div class='footer-container'>
-      <img src="./assets/logo-footer.svg"/>
+    <v-footer color="primary" class="justify-center">
+      <div class="footer-container">
+        <img src="./assets/logo-footer.svg" />
         <p class="footer-text">
           Universidade Federal de Mato Grosso do Sul. Copyright © 2021
-      </p>
-    </div>
+        </p>
+      </div>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-
 import VHeader from './components/Header.vue';
 
 export default {
-
   components: {
     VHeader,
   },
@@ -63,13 +56,13 @@ export default {
   color: #2c3e50;
 }
 
-.title{
+.title {
   cursor: pointer;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
   line-height: 32px;
-  color: #3988B8;
+  color: #3988b8;
 }
 
 .footer-container {
@@ -81,7 +74,7 @@ export default {
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0.75px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin: 0;
   }
 }

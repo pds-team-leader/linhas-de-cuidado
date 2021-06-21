@@ -48,6 +48,26 @@
 </template>
 
 <script>
+import api from '../services/api';
+
+export default {
+  name: 'Login',
+  methods: {
+    async authenticate(req) {
+      const { email, password } = req.body;
+
+      const res = await api.post('/login', { email, password });
+      try {
+        api.defaults.headers.common.Authorization = res.data.token;
+        res.sendStatus(200).send('Auth successfull');
+        this.$router.push('/');
+      } catch (err) {
+        if (err) this.$router.push('/login');
+        // to-do warning alert
+      }
+    },
+  },
+};
 </script>
 <style>
 </style>
