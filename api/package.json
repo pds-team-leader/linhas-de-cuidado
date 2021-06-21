@@ -30,7 +30,7 @@
   },
   "scripts": {
     "seed": "node scripts/seed.js",
-    "start": "nodemon --exec babel-node src/server.js --ignore-watch node_modules",
+    "dev": "nodemon --exec babel-node src/server.js --ignore-watch node_modules",
     "test": "NODE_ENV=test jest --coverage --forceExit --detectOpenHandles",
     "migrate": "node scripts/migrate.js"
   },
