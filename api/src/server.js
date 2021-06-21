@@ -7,3 +7,4 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`Server up at http://localhost:${PORT}`);
   });
 }
+export default app;
