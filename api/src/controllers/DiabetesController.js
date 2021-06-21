@@ -3,11 +3,13 @@ const Directory = require('../models/Directory');
 module.exports = {
 
   async store(req, res) {
-    const { title } = req.body;
+    const { title, description } = req.body;
     const guide = 1;
-    const directory = await Directory.create({ title, guide });
+    let directory;
 
-    if (!directory) {
+    try {
+      directory = await Directory.create({ title, description, guide });
+    } catch (error) {
       return res.status(400).json({ erro: 'Falha ao criar novo Diretório.' });
     }
 
@@ -17,8 +19,8 @@ module.exports = {
   async indexAll(req, res) {
     const directory = await Directory.findAll({
       where: {
-        guide: 1
-      }
+        guide: 1,
+      },
     });
 
     if (!directory) {
@@ -41,18 +43,19 @@ module.exports = {
   },
 
   async update(req, res) {
-    const { title } = req.body;
+    const { title, description } = req.body;
     const { id } = req.params;
 
     const directory = await Directory.findOne({ where: { id } });
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide != 1) {
+    } if (directory.guide !== 1) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
     directory.title = title;
+    directory.description = description;
 
     try {
       await directory.save();
@@ -72,7 +75,7 @@ module.exports = {
 
     if (!directory) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide != 1) {
+    } if (directory.guide !== 1) {
       return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 

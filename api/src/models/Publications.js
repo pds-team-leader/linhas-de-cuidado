@@ -1,29 +1,32 @@
 import Sequelize from 'sequelize';
-
 import connection from '../database/index';
 
-const Directory = connection.define('Directory', {
+const Publication = connection.define('Publication', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
+  directory: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
   title: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'Diretório',
+    defaultValue: 'Publicação',
   },
   description: {
     type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'Diretório',
+    allowNull: true,
+    defaultValue: 'Descrição da publicação',
   },
-  guide: {
-    type: Sequelize.INTEGER,
+  isFromGuide: {
+    type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: false,
   },
 });
 
-module.exports = Directory;
+export default Publication;

@@ -1,29 +1,23 @@
 import Sequelize from 'sequelize';
-
 import connection from '../database/index';
 
-const Directory = connection.define('Directory', {
+const Tag = connection.define('Tag', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  title: {
+  text: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'Diretório',
+    defaultValue: 'Tag',
   },
-  description: {
+  link: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'Diretório',
-  },
-  guide: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
+    defaultValue: '/',
   },
 });
 
-module.exports = Directory;
+export default Tag;
