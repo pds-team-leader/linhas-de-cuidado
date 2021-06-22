@@ -3,9 +3,9 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
         <v-list-item-group v-model="selectedItem" color="primary">
-          <v-list-item color="primary" class="item">Guia de Diabetes Mellitus</v-list-item>
-          <v-list-item color="primary">Guia de Hipertensão</v-list-item>
-          <v-list-item color="primary">Administrativo</v-list-item>
+          <v-list-item href='/guia/diabetes' color="primary">Guia de Diabetes Mellitus</v-list-item>
+          <v-list-item href='/guia/hipertensao' color="primary">Guia de Hipertensão</v-list-item>
+          <v-list-item href='/login' color="primary">Administrativo</v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
