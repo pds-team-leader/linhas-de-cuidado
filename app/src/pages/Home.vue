@@ -72,11 +72,11 @@ export default {
   color: #3988B8;
 }
 
+
 .rounded-card{
   width: 326px;
   border-radius:50px;
 }
-
 .home-cards {
   display: flex;
   justify-content: center;
