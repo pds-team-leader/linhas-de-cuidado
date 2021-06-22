@@ -1,11 +1,20 @@
 <template>
   <v-app id="app">
     <v-navigation-drawer v-model="drawer" app>
-      <v-list-item>teste</v-list-item>
+      <v-list>
+        <v-list-item-group v-model="selectedItem" color="primary">
+          <v-list-item color="primary" class="item">Guia de Diabetes Mellitus</v-list-item>
+          <v-list-item color="primary">Guia de Hipertensão</v-list-item>
+          <v-list-item color="primary">Admnistrativo</v-list-item>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
 
     <v-app-bar app>
-      <v-app-bar-nav-icon color="primary" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        color="primary"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title>
         <span class="title" @click="$router.push('/')">Linhas de Cuidado</span>
       </v-toolbar-title>
@@ -54,6 +63,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+  color: #3988b8 !important;
 }
 
 .title {
