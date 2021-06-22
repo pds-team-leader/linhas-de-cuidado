@@ -5,7 +5,7 @@
         <v-list-item-group v-model="selectedItem" color="primary">
           <v-list-item color="primary" class="item">Guia de Diabetes Mellitus</v-list-item>
           <v-list-item color="primary">Guia de Hipertensão</v-list-item>
-          <v-list-item color="primary">Admnistrativo</v-list-item>
+          <v-list-item color="primary">Administrativo</v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
