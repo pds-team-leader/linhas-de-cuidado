@@ -83,9 +83,11 @@ export default {
 
         // res.sendStatus(200).send('Auth successfull');
         this.$router.push('/');
+        console.log('login rolou');
       } catch (err) {
         // to-do warning alert
         if (err) this.$router.push('/login');
+        console.log('login não rolou');
       }
     },
   },
