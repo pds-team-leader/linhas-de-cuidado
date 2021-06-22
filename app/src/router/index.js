@@ -79,6 +79,39 @@ const routes = [
       ],
     },
   },
+  {
+    path: '/nova-publicacao',
+    name: 'NewDirectory',
+    component: () => import('../pages/NewDirectory.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Nova Publicação',
+        },
+      ],
+    },
+  },
+
+  {
+    path: '/editar-publicacao/:guia/:id',
+    name: 'EditDirectory',
+    component: () => import('../pages/EditDirectory.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Editar Publicação',
+        },
+      ],
+    },
+  },
 ];
 
 export default new VueRouter({
