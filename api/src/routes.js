@@ -15,8 +15,8 @@ routes.get('/login', (req, res) => res.json({ message: 'login page' }));
 routes.get('/administrador', authMiddleware, (req, res) => res.json({ message: 'admin page' }));
 
 routes.post('/admin', authMiddleware, AdminController.store);
-routes.get('/admin', authMiddleware, AdminController.indexAll);
-routes.get('/admin/:id', authMiddleware, AdminController.indexOne);
+routes.get('/admin', AdminController.indexAll);
+routes.get('/admin/:id', AdminController.indexOne);
 routes.put('/admin/:id', authMiddleware, AdminController.update);
 routes.delete('/admin/:id', authMiddleware, AdminController.delete);
 
