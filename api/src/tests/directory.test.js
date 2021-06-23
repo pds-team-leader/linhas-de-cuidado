@@ -1,14 +1,31 @@
 const supertest = require('supertest');
 const app = require('../app');
+require('dotenv').config();
 
 const request = supertest(app);
 
 let testId;
+let auth;
 
 describe('Endpoints CRUD de Diretórios', () => {
+  it('Realiza Login', async (done) => {
+    const res = await request
+      .post('/auth/authenticate')
+      .send({
+        email: process.env.ADMIN1_EMAIL,
+        password: process.env.ADMIN1_PASSWORD,
+      });
+
+    expect(200);
+
+    auth = res.body.token;
+
+    done();
+  });
   it('Cria um diretório no guia de diabetes', async (done) => {
     const response = await request
       .post('/diabetes')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste',
         description: 'Descrição',
@@ -36,6 +53,7 @@ describe('Endpoints CRUD de Diretórios', () => {
   it('Altera um diretório no guia de diabetes', async (done) => {
     const response = await request
       .put(`/diabetes/${testId}`)
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste Alterado',
         description: 'Descrição',
@@ -49,16 +67,19 @@ describe('Endpoints CRUD de Diretórios', () => {
   });
 
   it('Apaga um diretório no guia de diabetes', async (done) => {
-    const response = await request.delete(`/diabetes/${testId}`);
+    const response = await request
+      .delete(`/diabetes/${testId}`)
+      .set('Authorization', `bearer ${auth}`);
 
     expect(response.status).toBe(200);
 
     done();
   });
 
-  it('Lê todos os diretórios no guia de diabetes', async (done) => {
+  it('Cria um diretório no guia de diabetes', async (done) => {
     await request
       .post('/diabetes')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste',
         description: 'Descrição',
@@ -67,6 +88,7 @@ describe('Endpoints CRUD de Diretórios', () => {
 
     await request
       .post('/diabetes')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste 2',
         description: 'Descrição',
@@ -83,6 +105,7 @@ describe('Endpoints CRUD de Diretórios', () => {
   it('Cria um diretório no guia de hipertensao', async (done) => {
     const response = await request
       .post('/hipertensao')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste',
         description: 'Descrição',
@@ -110,6 +133,7 @@ describe('Endpoints CRUD de Diretórios', () => {
   it('Altera um diretório no guia de hipertensao', async (done) => {
     const response = await request
       .put(`/hipertensao/${testId}`)
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste Alterado',
         description: 'Descrição',
@@ -123,16 +147,19 @@ describe('Endpoints CRUD de Diretórios', () => {
   });
 
   it('Apaga um diretório no guia de hipertensao', async (done) => {
-    const response = await request.delete(`/hipertensao/${testId}`);
+    const response = await request
+      .delete(`/hipertensao/${testId}`)
+      .set('Authorization', `bearer ${auth}`);
 
     expect(response.status).toBe(200);
 
     done();
   });
 
-  it('Lê todos os diretórios no guia de hipertensao', async (done) => {
+  it('Cria um diretório no guia de hipertensao', async (done) => {
     await request
       .post('/hipertensao')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste',
         description: 'Descrição',
@@ -141,6 +168,7 @@ describe('Endpoints CRUD de Diretórios', () => {
 
     await request
       .post('/hipertensao')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste 2',
         description: 'Descrição',
@@ -157,6 +185,7 @@ describe('Endpoints CRUD de Diretórios', () => {
   it('Retorna erro ao criar diretório inválido', async (done) => {
     const resDiabetes = await request
       .post('/diabetes')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: null,
         description: 'Descrição',
@@ -165,6 +194,7 @@ describe('Endpoints CRUD de Diretórios', () => {
 
     const resHipertensao = await request
       .post('/hipertensao')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         title: null,
         description: 'Descrição',
@@ -178,8 +208,13 @@ describe('Endpoints CRUD de Diretórios', () => {
   });
 
   it('Retorna erro ao atualizar diretório inexistente', async (done) => {
-    const resDiabetes = await request.put('/diabetes/-1');
-    const resHipertensao = await request.put('/hipertensao/-1');
+    const resDiabetes = await request
+      .put('/diabetes/-1')
+      .set('Authorization', `bearer ${auth}`);
+
+    const resHipertensao = await request
+      .put('/hipertensao/-1')
+      .set('Authorization', `bearer ${auth}`);
 
     expect(resDiabetes.status).toBe(400);
     expect(resHipertensao.status).toBe(400);
@@ -188,8 +223,13 @@ describe('Endpoints CRUD de Diretórios', () => {
   });
 
   it('Retorna erro ao apagar diretório inexistente', async (done) => {
-    const resDiabetes = await request.delete('/diabetes/-1');
-    const resHipertensao = await request.delete('/hipertensao/-1');
+    const resDiabetes = await request
+      .delete('/diabetes/-1')
+      .set('Authorization', `bearer ${auth}`);
+
+    const resHipertensao = await request
+      .delete('/hipertensao/-1')
+      .set('Authorization', `bearer ${auth}`);
 
     expect(resDiabetes.status).toBe(400);
     expect(resHipertensao.status).toBe(400);

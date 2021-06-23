@@ -1,15 +1,12 @@
 <template>
-    <div>
+  <div>
     <breadcrumb />
     <v-overlay color="primary" :value="overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <v-container class="vcontainer">
       <v-row>
-        <v-col class="main-col" >
+        <v-col class="main-col">
           <v-sheet
             v-if="admin"
             class="vsheet pt-3"
@@ -123,17 +120,15 @@ export default {
   mounted() {
     this.reset();
   },
-
 };
 </script>
 
 <style lang="scss" scoped>
-
-.title{
+.title {
   font-style: normal;
   font-weight: bold;
   font-size: 24px !important;
-  line-height: 32px ;
+  line-height: 32px;
   letter-spacing: 1px !important;
   color: #3988B8;
 
@@ -145,10 +140,10 @@ export default {
 .description {
   font-style: normal;
   font-weight: normal;
-  font-size: 16px ;
+  font-size: 16px;
   line-height: 28px;
   letter-spacing: 0.75px;
-  color: #8C8C8C;
+  color: #8c8c8c;
 }
 
 .vcontainer {

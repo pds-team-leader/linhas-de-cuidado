@@ -3,18 +3,18 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card elevation="4" class="login-card">
-          <v-card-title class="primary white--text justify-center">Login</v-card-title>
+          <v-card-title class="primary white--text justify-center"
+            >Login</v-card-title
+          >
           <v-card-text>
             <v-container>
-              <form>
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
                       class="text"
                       name="user"
                       label="Usuário"
-                      id="user"
-                      v-model="user"
+                      v-model="input.username"
                       type="user"
                       required
                     ></v-text-field>
@@ -26,8 +26,7 @@
                       class="text"
                       name="password"
                       label="Senha"
-                      id="password"
-                      v-model="password"
+                      v-model="input.password"
                       type="password"
                       required
                     ></v-text-field>
@@ -35,10 +34,13 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn class="primary white--text" type="submit">Entrar</v-btn>
+                    <v-btn
+                      class="primary white--text"
+                      v-on:click="authenticate()"
+                      >Entrar</v-btn
+                    >
                   </v-flex>
                 </v-layout>
-              </form>
             </v-container>
           </v-card-text>
         </v-card>
@@ -48,6 +50,48 @@
 </template>
 
 <script>
+import api from '../services/api';
+
+export default {
+  name: 'Login',
+  data() {
+    return {
+      input: {
+        username: '',
+        password: '',
+      },
+    };
+  },
+  methods: {
+    async authenticate() {
+      console.log('Mamae estou autenticando');
+
+      console.log('USER', this.input.username);
+      console.log('PASSWORD', this.input.password);
+
+      const res = await api.post('/auth/authenticate', {
+        email: this.input.username,
+        password: this.input.password,
+      });
+
+      console.log('Vou TENTAR hein');
+
+      try {
+        api.defaults.headers.common.Authorization = res.data.token;
+
+        console.log('AUTH', api.defaults.headers.common.Authorization);
+
+        // res.sendStatus(200).send('Auth successfull');
+        this.$router.push('/');
+        console.log('login rolou');
+      } catch (err) {
+        // to-do warning alert
+        if (err) this.$router.push('/login');
+        console.log('login não rolou');
+      }
+    },
+  },
+};
 </script>
 <style>
 </style>
