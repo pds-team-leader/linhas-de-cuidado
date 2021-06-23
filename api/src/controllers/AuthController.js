@@ -9,53 +9,54 @@ const Admin = require('../models/Admin');
 const router = express.Router();
 
 function generateToken(params = {}) {
-    return jwt.sign(params, authConfig.secret, {expiresIn: 36000});
-};
+  return jwt.sign(params, authConfig.secret, { expiresIn: 36000 });
+}
 
 router.post('/register', async (req, res) => {
-    const { email } = req.body;
-    
-    try {
-        if (await Admin.findAll({
-            where: {
-              email: email
-            }
-          })) {
-            return res.status(400).send({error: 'Administrador já cadastrado'});
-        }
-        const admin = await Admin.create(req.body);
-        admin.password = undefined;
+  const { email } = req.body;
 
-        return res.send({
-            admin,
-            token: generateToken({id: admin.id})
-        });
-        
-    } catch (err){
-        return res.status(400).send( {error: 'Falha ao tentar cadastrar.'});
+  try {
+    if (await Admin.findAll({
+      where: {
+        email,
+      },
+    })) {
+      return res.status(400).send({ error: 'Administrador já cadastrado' });
     }
+    const admin = await Admin.create(req.body);
+    admin.password = undefined;
+
+    return res.send({
+      admin,
+      token: generateToken({ id: admin.id }),
+    });
+  } catch (err) {
+    return res.status(400).send({ error: 'Falha ao tentar cadastrar.' });
+  }
 });
 
 router.post('/authenticate', async (req, res) => {
-    const {email, password} = req.body;
-    console.log('recebi email e senha');
-    const admin = await Admin.findOne({ where: { email: email } });;
-    console.log('busquei usuario no banco');
-    if (!admin){
-        return res.status(400).send({error: 'Administrador não encontrado.'});
-    }
-    console.log('achei o usuario no banco');
-    console.log(admin.password);
-    
-    // if(!await bcrypt.compare(password, admin.password)){
-    //     return res.status(400).send({error: 'Senha inválida.'});
-    // }
-    console.log('validei a senha');
-    res.send({
-        admin,
-        token: generateToken({id: admin.id })});
+  const { email, password } = req.body;
+  console.log('recebi email e senha');
+  const admin = await Admin.findOne({ where: { email } });
+  console.log('busquei usuario no banco');
+  if (!admin) {
+    return res.status(400).send({ error: 'Administrador não encontrado.' });
+  }
+  console.log('achei o usuario no banco');
+  console.log(admin.password);
+
+  //   if (!await bcrypt.compare(password, admin.password)) {
+  //     return res.status(400).send({ error: 'Senha inválida.' });
+  //   }
+  console.log('validei a senha');
+  res.send({
+    admin,
+    token: generateToken({ id: admin.id }),
+  });
+  console.log('REsSssSSSssSsSSsS', res);
 });
-        /* TO DO FORGOT PASSWORD AND RESET PASSWORD (convert mongo to postgres)
+/* TO DO FORGOT PASSWORD AND RESET PASSWORD (convert mongo to postgres)
 router.post('/forgot_password', async (req, res) => {
     const {email} = req.body;
 
@@ -67,7 +68,7 @@ router.post('/forgot_password', async (req, res) => {
         }
         const token = crypto.randomBytes(20).toString('hex');
         const agora = new Date();
-        agora.setHours(agora.getHours() + 1); 
+        agora.setHours(agora.getHours() + 1);
 
         await Admin.update({ lastName: "Doe" }, {
             where: {
@@ -92,7 +93,7 @@ router.post('/forgot_password', async (req, res) => {
         return res.status(400).send({error: 'Erro ao tentar recuperar senha, por favor tente novamente.'});
     }
 })
- 
+
 router.post('/reset_password', async (req, res) => {
     const { email, token, password } = req.body;
 
@@ -120,4 +121,4 @@ router.post('/reset_password', async (req, res) => {
     }
 })
 */
-module.exports = app => app.use('/auth', router);
+module.exports = (app) => app.use('/auth', router);

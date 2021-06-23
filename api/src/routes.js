@@ -15,10 +15,10 @@ routes.get('/login', (req, res) => res.json({ message: 'login page' }));
 routes.get('/administrador', authMiddleware, (req, res) => res.json({ message: 'admin page' }));
 
 routes.post('/admin', authMiddleware, AdminController.store);
-routes.get('/admin', AdminController.indexAll);
+// routes.get('/admin', AdminController.indexAll);
 routes.get('/admin/:id', AdminController.indexOne);
-routes.put('/admin/:id', authMiddleware, AdminController.update);
-routes.delete('/admin/:id', authMiddleware, AdminController.delete);
+// routes.put('/admin/:id', authMiddleware, AdminController.update);
+// routes.delete('/admin/:id', authMiddleware, AdminController.delete);
 
 routes.post('/diabetes', authMiddleware, DiabetesController.store);
 routes.get('/diabetes', DiabetesController.indexAll);
