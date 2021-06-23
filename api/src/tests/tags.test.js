@@ -1,5 +1,6 @@
 const supertest = require('supertest');
 const app = require('../app');
+require('dotenv').config();
 
 const request = supertest(app);
 
@@ -11,8 +12,8 @@ describe('Endpoints CRUD de tags', () => {
     const res = await request
       .post('/auth/authenticate')
       .send({
-        email: 'admin1',
-        password: 'admin1',
+        email: process.env.ADMIN1_EMAIL,
+        password: process.env.ADMIN1_PASSWORD,
       });
 
     expect(200);
