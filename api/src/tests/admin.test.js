@@ -27,12 +27,12 @@ describe('Endpoints Admin', () => {
       .post('/admin')
       .set('Authorization', `bearer ${auth}`)
       .send({
-        email: 'teste@teste',
-        password: 'teste@teste',
+        email: process.env.TESTE_EMAIL,
+        password: process.env.TESTE_PASSWORD,
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.email).toBe('teste@teste');
+    expect(response.body.email).toBe(process.env.TESTE_EMAIL);
 
     testId = response.body.id;
     done();
@@ -43,7 +43,7 @@ describe('Endpoints Admin', () => {
       .get(`/admin/${testId}`);
 
     expect(response.status).toBe(200);
-    expect(response.body.email).toBe('teste@teste');
+    expect(response.body.email).toBe(process.env.TESTE_EMAIL);
 
     done();
   });
