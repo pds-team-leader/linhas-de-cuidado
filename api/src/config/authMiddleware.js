@@ -2,29 +2,28 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('./authconfig.json');
 
 module.exports = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-    if (!authHeader){
-        return res.status(401).send({error: 'Não foi providenciado token'});
-    }
+  if (!authHeader) {
+    return res.status(401).send({ error: 'Não foi providenciado token' });
+  }
 
-    const parts = authHeader.split(' ');
-    
-    if (!parts.length === 2) {
-        return res.status(401).send({ error: 'Erro de token' });
-    }
+  const parts = authHeader.split(' ');
 
-    const [ scheme, token ] = parts;
+  if (!parts.length == 2) {
+    return res.status(401).send({ error: 'Erro de token' });
+  }
 
-    if(!/^Bearer$/i.test(scheme)) {
-        return res.status(401).send({ error: 'Token mal formatado'})
-    }
+  const [scheme, token] = parts;
 
-    jwt.verify(token, authConfig.secret, (err, decoded) => {
-        if (err) return res.status(401).send({error: 'Token inválido.'});
+  if (!/^Bearer$/i.test(scheme)) {
+    return res.status(401).send({ error: 'Token mal formatado' });
+  }
 
-        req.userId = decoded.id;
-        return next();
-    })
+  jwt.verify(token, authConfig.secret, (err, decoded) => {
+    if (err) return res.status(401).send({ error: 'Token inválido.' });
 
+    req.userId = decoded.id;
+    return next();
+  });
 };
