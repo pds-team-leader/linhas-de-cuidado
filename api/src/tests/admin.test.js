@@ -12,8 +12,8 @@ describe('Endpoints Admin', () => {
     const res = await request
       .post('/auth/authenticate')
       .send({
-        email: process.env.TESTE_EMAIL,
-        password: process.env.TESTE_PASSWORD,
+        email: process.env.ADMIN1_EMAIL,
+        password: process.env.ADMIN1_PASSWORD,
       });
 
     expect(200);
@@ -27,12 +27,12 @@ describe('Endpoints Admin', () => {
       .post('/admin')
       .set('Authorization', `bearer ${auth}`)
       .send({
-        email: 'teste',
-        password: 'teste',
+        email: 'teste@teste',
+        password: 'teste@teste',
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.email).toBe('teste');
+    expect(response.body.email).toBe('teste@teste');
 
     testId = response.body.id;
     done();
@@ -43,7 +43,7 @@ describe('Endpoints Admin', () => {
       .get(`/admin/${testId}`);
 
     expect(response.status).toBe(200);
-    expect(response.body.email).toBe('teste');
+    expect(response.body.email).toBe('teste@teste');
 
     done();
   });
