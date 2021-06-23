@@ -8,21 +8,51 @@
       <v-row>
         <v-col class="main-col">
           <v-sheet
+            v-if="admin"
+            class="vsheet pt-3"
+            outlined
+            max-height="56px"
+          >
+            <p @click="$router.push('/nova-publicacao')" class="title" >+ Novo Diretório</p>
+          </v-sheet>
+          <v-sheet
             class="vsheet"
             v-for="dir in directories"
             :key="dir.id"
             outlined
-            max-height="156px"
-            @click="goToPublications(dir.id)"
           >
             <v-row>
-              <v-col :cols="10">
+              <v-col>
                 <div class="text-col">
-                  <span class="title"> {{ dir.title }} </span>
-                  <p class="description">{{ dir.description }}</p>
+                  <span
+                    class="title"
+                    @click="goToPublications(dir.id)"
+                  >
+                    {{dir.title}}
+                  </span>
+                  <p class="description"> {{dir.description}} </p>
                 </div>
+                <v-row
+                  v-if="admin"
+                  style="margin-left: 1rem"
+                >
+                  <v-btn
+                    style="border-radius: 12px"
+                    color="primary"
+                    @click="editar(dir.id)"
+                  >
+                    <div class="button-text">Editar</div>
+                  </v-btn>
+                  <v-btn
+                    style="margin-left: 1rem; border-radius: 12px"
+                    color="error"
+                    @click="excluir(dir.id)"
+                  >
+                    <div class="button-text">Excluir</div>
+                  </v-btn>
+                </v-row>
               </v-col>
-              <v-col :cols="2">
+              <v-col :cols="2" v-if="!admin">
                 <v-btn
                   color="primary"
                   icon
@@ -53,7 +83,8 @@ export default {
   name: 'Guia',
   data() {
     return {
-      directories: ' ',
+      directories: '',
+      admin: true,
     };
   },
   computed: {
@@ -75,11 +106,19 @@ export default {
     },
     reset() {
       this.directories = '';
+      this.getDirectories();
+    },
+    async editar(id) {
+      this.$router.push(`/editar-publicacao/${this.guia}/${id}`);
+    },
+    async excluir(id) {
+      const response = await api.delete(`/${this.guia}/${id}`);
+      this.reset();
+      return response;
     },
   },
   mounted() {
     this.reset();
-    this.getDirectories();
   },
 };
 </script>
@@ -91,7 +130,11 @@ export default {
   font-size: 24px !important;
   line-height: 32px;
   letter-spacing: 1px !important;
-  color: #3988b8;
+  color: #3988B8;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .description {
@@ -122,18 +165,45 @@ export default {
   max-width: 900px;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   border-right: none;
   border-left: none;
+  height: 156px;
+  overflow: hidden;
 
   &:hover {
     background-color: #ececec;
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .vsheet {
+    height: 180px;
+  }
+
+  .title {
+    font-size: 22px !important;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
 .main-col {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.button-text {
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.75px;
+  color: #ffffff;
+}
+
 </style>

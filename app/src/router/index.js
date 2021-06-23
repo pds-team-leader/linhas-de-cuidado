@@ -85,21 +85,37 @@ const routes = [
     component: () => import('../pages/Login.vue'),
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../pages/Login.vue'),
+    path: '/nova-publicacao',
+    name: 'NewDirectory',
+    component: () => import('../pages/NewDirectory.vue'),
     meta: {
       breadcrumbs: [
         {
-          text: 'Login',
+          text: 'Home',
           route: '/',
         },
         {
-          text: 'Login',
+          text: 'Nova Publicação',
         },
       ],
     },
-    props: true,
+  },
+
+  {
+    path: '/editar-publicacao/:guia/:id',
+    name: 'EditDirectory',
+    component: () => import('../pages/EditDirectory.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Editar Publicação',
+        },
+      ],
+    },
   },
 ];
 
