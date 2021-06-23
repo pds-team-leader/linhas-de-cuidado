@@ -9,16 +9,12 @@ const routes = express.Router();
 const authMiddleware = require('./config/authMiddleware');
 
 routes.get('/', (req, res) => res.json({ message: 'Sorry, Mario! Your home page is another castle' }));
-routes.get('/login', (req, res) => res.json({ message: 'login page' }));
-
-// rotas protegidas
-routes.get('/administrador', authMiddleware, (req, res) => res.json({ message: 'admin page' }));
 
 routes.post('/admin', authMiddleware, AdminController.store);
 // routes.get('/admin', AdminController.indexAll);
 routes.get('/admin/:id', AdminController.indexOne);
 // routes.put('/admin/:id', authMiddleware, AdminController.update);
-// routes.delete('/admin/:id', authMiddleware, AdminController.delete);
+routes.delete('/admin/:id', authMiddleware, AdminController.delete);
 
 routes.post('/diabetes', authMiddleware, DiabetesController.store);
 routes.get('/diabetes', DiabetesController.indexAll);
