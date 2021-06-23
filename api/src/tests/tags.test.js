@@ -4,11 +4,27 @@ const app = require('../app');
 const request = supertest(app);
 
 let testId;
+let auth;
 
 describe('Endpoints CRUD de tags', () => {
+  it('Realiza Login', async (done) => {
+    const res = await request
+      .post('/auth/authenticate')
+      .send({
+        email: 'admin1',
+        password: 'admin1',
+      });
+
+    expect(200);
+
+    auth = res.body.token;
+
+    done();
+  });
   it('Cria uma tag', async (done) => {
     const response = await request
       .post('/tag')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         text: 'Teste 1',
         link: '',
@@ -35,6 +51,7 @@ describe('Endpoints CRUD de tags', () => {
   it('Altera uma tag existente', async (done) => {
     const response = await request
       .put(`/tag/${testId}`)
+      .set('Authorization', `bearer ${auth}`)
       .send({
         text: 'Teste 1 Alterado',
         link: '',
@@ -47,7 +64,9 @@ describe('Endpoints CRUD de tags', () => {
   });
 
   it('Apaga uma tag existente', async (done) => {
-    const response = await request.delete(`/tag/${testId}`);
+    const response = await request
+      .delete(`/tag/${testId}`)
+      .set('Authorization', `bearer ${auth}`);
 
     expect(response.status).toBe(200);
 
@@ -57,6 +76,7 @@ describe('Endpoints CRUD de tags', () => {
   it('Lê todas as tags existentes', async (done) => {
     await request
       .post('/tag')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         text: 'T01',
         link: '',
@@ -64,6 +84,7 @@ describe('Endpoints CRUD de tags', () => {
 
     await request
       .post('/tag')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         text: 'T02',
         link: '',
@@ -76,32 +97,10 @@ describe('Endpoints CRUD de tags', () => {
     done();
   });
 
-  it('Lê todas as publicações existentes', async (done) => {
-    await request
-      .post('/publications')
-      .send({
-        title: 'Título Teste 1',
-        description: 'Descrição Teste 1',
-        isFromGuide: true,
-      });
-
-    await request
-      .post('/publications')
-      .send({
-        title: 'Título Teste 2',
-        description: 'Descrição Teste 2',
-        isFromGuide: true,
-      });
-
-    const response = await request.get('/publications');
-
-    expect(response.status).toBe(200);
-    expect(response.body.length).toBeGreaterThanOrEqual(2);
-    done();
-  });
   it('Retorna erro ao criar tag inválida', async (done) => {
     const response = await request
       .post('/tag')
+      .set('Authorization', `bearer ${auth}`)
       .send({
         text: null,
         link: null,
@@ -113,7 +112,9 @@ describe('Endpoints CRUD de tags', () => {
   });
 
   it('Retorna erro ao atualizar tag inexistente', async (done) => {
-    const response = await request.put('/tag/-1');
+    const response = await request
+      .put('/tag/-1')
+      .set('Authorization', `bearer ${auth}`);
 
     expect(response.status).toBe(400);
 
@@ -121,7 +122,9 @@ describe('Endpoints CRUD de tags', () => {
   });
 
   it('Retorna erro ao apagar tag inexistente', async (done) => {
-    const resHipertensao = await request.delete('/tag/-1');
+    const resHipertensao = await request
+      .delete('/tag/-1')
+      .set('Authorization', `bearer ${auth}`);
 
     expect(resHipertensao.status).toBe(400);
 
