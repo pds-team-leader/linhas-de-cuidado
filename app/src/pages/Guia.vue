@@ -1,15 +1,12 @@
 <template>
-    <div>
+  <div>
     <breadcrumb />
     <v-overlay color="primary" :value="overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <v-container class="vcontainer">
       <v-row>
-        <v-col class="main-col" >
+        <v-col class="main-col">
           <v-sheet
             class="vsheet"
             v-for="dir in directories"
@@ -21,8 +18,8 @@
             <v-row>
               <v-col :cols="10">
                 <div class="text-col">
-                  <span class="title"> {{dir.title}} </span>
-                  <p class="description"> {{dir.description}} </p>
+                  <span class="title"> {{ dir.title }} </span>
+                  <p class="description">{{ dir.description }}</p>
                 </div>
               </v-col>
               <v-col :cols="2">
@@ -56,7 +53,7 @@ export default {
   name: 'Guia',
   data() {
     return {
-      directories: '',
+      directories: ' ',
     };
   },
   computed: {
@@ -84,28 +81,26 @@ export default {
     this.reset();
     this.getDirectories();
   },
-
 };
 </script>
 
 <style lang="scss" scoped>
-
-.title{
+.title {
   font-style: normal;
   font-weight: bold;
   font-size: 24px !important;
-  line-height: 32px ;
+  line-height: 32px;
   letter-spacing: 1px !important;
-  color: #3988B8;
+  color: #3988b8;
 }
 
 .description {
   font-style: normal;
   font-weight: normal;
-  font-size: 16px ;
+  font-size: 16px;
   line-height: 28px;
   letter-spacing: 0.75px;
-  color: #8C8C8C;
+  color: #8c8c8c;
 }
 
 .vcontainer {
@@ -141,5 +136,4 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 </style>
