@@ -7,9 +7,11 @@ module.exports = {
   async store(req, res) {
     const { email, password } = req.body;
 
-    const admin = await Admin.create({ email, password });
+    let admin;
 
-    if (!admin) {
+    try {
+      admin = await Admin.create({ email, password });
+    } catch (error) {
       return res.status(400).json({ erro: 'Falha ao criar novo Administrador.' });
     }
 
@@ -28,11 +30,12 @@ module.exports = {
 
   async indexOne(req, res) {
     const { id } = req.params;
+    let admin;
 
-    const admin = await Admin.findByPk(id);
-
-    if (!admin) {
-      return res.json({ erro: 'Administrador não encontrado.' });
+    try {
+      admin = await Admin.findByPk(id);
+    } catch (error) {
+      return res.status(400).json({ erro: 'Administrador não encontrado.' });
     }
 
     return res.json(admin);
@@ -61,23 +64,23 @@ module.exports = {
   //   return res.json(admin);
   // },
 
-  // async delete(req, res) {
-  //   const { id } = req.params;
+  async delete(req, res) {
+    const { id } = req.params;
 
-  //   const admin = await Admin.findOne({ where: { id } });
+    const admin = await Admin.findOne({ where: { id } });
 
-  //   if (!admin) {
-  //     return res.status(400).json({ erro: 'Administrador não encontrado.' });
-  //   }
+    if (!admin) {
+      return res.status(400).json({ erro: 'Administrador não encontrado.' });
+    }
 
-  //   try {
-  //     admin.destroy();
-  //   } catch (error) {
-  //     return res.status(400).json({
-  //       erro: error,
-  //     });
-  //   }
+    try {
+      admin.destroy();
+    } catch (error) {
+      return res.status(400).json({
+        erro: error,
+      });
+    }
 
-  //   return res.json(admin);
-  // },
+    return res.json(admin);
+  },
 };

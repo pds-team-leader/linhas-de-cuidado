@@ -1,0 +1,92 @@
+const supertest = require('supertest');
+const app = require('../app');
+
+const request = supertest(app);
+
+let testId;
+let auth;
+
+describe('Endpoints Admin', () => {
+  it('Realiza Login', async (done) => {
+    const res = await request
+      .post('/auth/authenticate')
+      .send({
+        email: 'admin1',
+        password: 'admin1',
+      });
+
+    expect(200);
+
+    auth = res.body.token;
+
+    done();
+  });
+  it('Cria um administrador', async (done) => {
+    const response = await request
+      .post('/admin')
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        email: 'teste',
+        password: 'teste',
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.email).toBe('teste');
+
+    testId = response.body.id;
+    done();
+  });
+
+  it('Lê um administrador', async (done) => {
+    const response = await request
+      .get(`/admin/${testId}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.email).toBe('teste');
+
+    done();
+  });
+
+  it('Apaga um administrador', async (done) => {
+    const response = await request
+      .delete(`/admin/${testId}`)
+      .set('Authorization', `bearer ${auth}`);
+
+    expect(response.status).toBe(200);
+
+    done();
+  });
+
+  it('Retorna erro ao criar administrador inválido', async (done) => {
+    const response = await request
+      .post('/admin')
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        email: null,
+        password: null,
+      });
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao buscar administrador inexistente', async (done) => {
+    const response = await request
+      .get('/admin/test');
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+
+  it('Retorna erro ao apagar administrador inexistente', async (done) => {
+    const response = await request
+      .delete('/admin/-1')
+      .set('Authorization', `bearer ${auth}`);
+
+    expect(response.status).toBe(400);
+
+    done();
+  });
+});
