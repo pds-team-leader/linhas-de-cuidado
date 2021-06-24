@@ -37,25 +37,20 @@ router.post('/register', async (req, res) => {
 
 router.post('/authenticate', async (req, res) => {
   const { email, password } = req.body;
-  console.log('recebi email e senha');
   const admin = await Admin.findOne({ where: { email } });
-  console.log('busquei usuario no banco');
   if (!admin) {
     return res.status(400).send({ error: 'Administrador não encontrado.' });
   }
-  console.log('achei o usuario no banco');
-  console.log(admin.password);
 
-  //   if (!await bcrypt.compare(password, admin.password)) {
-  //     return res.status(400).send({ error: 'Senha inválida.' });
-  //   }
-  console.log('validei a senha');
+  if (!await bcrypt.compare(password, admin.password)) {
+    return res.status(400).send({ error: 'Senha inválida.' });
+  }
   res.send({
     admin,
     token: generateToken({ id: admin.id }),
   });
-  console.log('REsSssSSSssSsSSsS', res);
 });
+
 /* TO DO FORGOT PASSWORD AND RESET PASSWORD (convert mongo to postgres)
 router.post('/forgot_password', async (req, res) => {
     const {email} = req.body;
