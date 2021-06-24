@@ -47,12 +47,16 @@ jobs:
         env:
           PG_HOST: postgres
           PG_PORT: 5432
+          PG_USERNAME: 5432
+          PG_PASSWORD: 5432
 
       - name: Run Tests
         run: npm test
         env:
           PG_HOST: postgres
           PG_PORT: 5432
+          PG_USERNAME: 5432
+          PG_PASSWORD: 5432
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
