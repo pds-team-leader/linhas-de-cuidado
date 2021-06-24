@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.14.3",
     "bcrypt": "^5.0.1",
