@@ -34,7 +34,7 @@
   },
   "scripts": {
     "seed": "node scripts/seed.js",
-    "start": "node --exec babel-node src/server.js --ignore-watch node_modules",
+    "start": "node src/server.js",
     "test": "NODE_ENV=test jest --coverage --forceExit --detectOpenHandles",
     "migrate": "node scripts/migrate.js"
   },
