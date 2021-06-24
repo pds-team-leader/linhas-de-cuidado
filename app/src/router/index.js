@@ -80,6 +80,42 @@ const routes = [
     },
   },
   {
+    path: '/guia/extras',
+    name: 'Extras',
+    component: () => import('../pages/Guia.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Conteúdos Extras',
+        },
+      ],
+    },
+  },
+  {
+    path: '/guia/extras/:id',
+    name: 'Diretorio',
+    component: () => import('../pages/Diretorio.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Conteúdos Extras',
+          route: '/extras',
+        },
+        {
+          text: 'Publicações',
+        },
+      ],
+    },
+  },
+  {
     path: '/',
     name: 'Login',
     component: () => import('../pages/Login.vue'),

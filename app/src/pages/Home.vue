@@ -34,7 +34,6 @@
       <v-card
         width="326px"
         class="mt-4"
-        disabled
       >
         <v-img
           height="140"
@@ -42,7 +41,7 @@
         ></v-img>
         <v-card-title class="justify-center">Conteúdos Extras</v-card-title>
         <v-card-text>Videos, podcasts, artigos e diversos conteúdos.</v-card-text>
-        <v-btn class="mb-6" color="primary" to="/conteudo-extra">Saber mais</v-btn>
+        <v-btn class="mb-6" color="primary" to="/extras">Saber mais</v-btn>
       </v-card>
     </div>
 

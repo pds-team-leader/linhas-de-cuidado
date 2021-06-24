@@ -3,12 +3,13 @@ import TagController from './controllers/TagController';
 import PublicationsController from './controllers/PublicationsController';
 import DiabetesController from './controllers/DiabetesController';
 import HipertensaoController from './controllers/HipertensaoController';
+import ExtrasController from './controllers/ExtrasController';
 import AdminController from './controllers/AdminController';
 
 const routes = express.Router();
 const authMiddleware = require('./config/authMiddleware');
 
-routes.get('/', (req, res) => res.json({ message: 'Sorry, Mario! Your home page is another castle' }));
+routes.get('/', (req, res) => res.json({ message: 'Sorry, Mario! Your home page is in another castle' }));
 
 routes.post('/admin', authMiddleware, AdminController.store);
 // routes.get('/admin', AdminController.indexAll);
@@ -34,6 +35,12 @@ routes.get('/hipertensao', HipertensaoController.indexAll);
 routes.get('/hipertensao/:id', HipertensaoController.indexOne);
 routes.put('/hipertensao/:id', authMiddleware, HipertensaoController.update);
 routes.delete('/hipertensao/:id', authMiddleware, HipertensaoController.delete);
+
+routes.post('/extras', authMiddleware, ExtrasController.store);
+routes.get('/extras', ExtrasController.indexAll);
+routes.get('/extras/:id', ExtrasController.indexOne);
+routes.put('/extras/:id', authMiddleware, ExtrasController.update);
+routes.delete('/extras/:id', authMiddleware, ExtrasController.delete);
 
 routes.post('/tag', authMiddleware, TagController.store);
 routes.get('/tag', TagController.indexAll);
