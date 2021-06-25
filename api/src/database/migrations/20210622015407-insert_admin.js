@@ -15,6 +15,12 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        email: process.env.ADMIN3_EMAIL,
+        password: process.env.ADMIN3_PASSWORD,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ]);
   },
 };

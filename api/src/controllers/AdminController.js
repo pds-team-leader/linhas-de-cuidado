@@ -9,12 +9,12 @@ module.exports = {
     const { email, password } = req.body;
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
 
     let admin;
 
     try {
-      admin = await Admin.create({ email, hashedPassword });
+      const hashedPassword = await bcrypt.hash(password, salt);
+      admin = await Admin.create({ email, password: hashedPassword });
     } catch (error) {
       return res.status(400).json({ erro: 'Falha ao criar novo Administrador.' });
     }
