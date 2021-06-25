@@ -89,8 +89,9 @@
                 class="vbtn"
                 color="primary"
                 type="submit"
+                pr
                 :disabled="!isValid"
-                @click="addDirectory"
+                @click.prevent.stop="addDirectory"
               >
                 Salvar
                 </v-btn>
@@ -110,7 +111,6 @@ export default {
   components: { Breadcrumb },
   data() {
     return {
-      admin: true,
       sections: [
         {
           title: '',
@@ -146,6 +146,11 @@ export default {
       });
 
       this.$router.push(`/guia/${this.guia}`);
+    },
+  },
+  computed: {
+    admin() {
+      return Boolean(api.defaults.headers.common.Authorization);
     },
   },
 

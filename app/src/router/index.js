@@ -80,6 +80,11 @@ const routes = [
     },
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../pages/Login.vue'),
+  },
+  {
     path: '/nova-publicacao',
     name: 'NewDirectory',
     component: () => import('../pages/NewDirectory.vue'),

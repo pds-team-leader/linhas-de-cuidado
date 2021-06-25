@@ -34,7 +34,6 @@
       <v-card
         width="326px"
         class="mt-4"
-        disabled
       >
         <v-img
           height="140"

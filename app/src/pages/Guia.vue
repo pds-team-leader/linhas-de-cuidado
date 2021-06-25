@@ -18,6 +18,9 @@
           >
             <p @click="$router.push('/nova-publicacao')" class="title" >+ Novo Diretório</p>
           </v-sheet>
+          <p class="mt-5" v-if="directories.length === 0">
+              Não há publicações
+          </p>
           <v-sheet
             class="vsheet"
             v-for="dir in directories"
@@ -87,7 +90,6 @@ export default {
   data() {
     return {
       directories: '',
-      admin: true,
     };
   },
   computed: {
@@ -96,6 +98,9 @@ export default {
     },
     overlay() {
       return this.directories === '';
+    },
+    admin() {
+      return api.defaults.headers.common.Authorization;
     },
   },
   methods: {
