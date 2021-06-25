@@ -9,7 +9,7 @@ const Admin = require('../models/Admin');
 const router = express.Router();
 
 function generateToken(params = {}) {
-  return jwt.sign(params, authConfig.secret, { expiresIn: 36000 });
+  return jwt.sign(params, authConfig.secret);
 }
 
 router.post('/register', async (req, res) => {
