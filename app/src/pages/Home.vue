@@ -75,7 +75,6 @@ export default {
   width: 326px;
   border-radius:50px;
 }
-
 .home-cards {
   display: flex;
   justify-content: center;
