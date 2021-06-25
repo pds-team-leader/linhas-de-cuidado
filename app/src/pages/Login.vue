@@ -68,10 +68,8 @@ export default {
         email: this.input.username,
         password: this.input.password,
       });
-
       try {
         api.defaults.headers.common.Authorization = res.data.token;
-
         // res.sendStatus(200).send('Auth successfull');
         this.$router.push('/');
       } catch (err) {
