@@ -13,6 +13,9 @@
           @click="$router.push('/guia/hipertensao')"
           color="primary">Guia de Hipertensão</v-list-item>
           <v-list-item
+          @click="$router.push('/guia/extras')"
+          color="primary">Conteúdos Extras</v-list-item>
+          <v-list-item
           @click="$router.push('/login')"
           color="primary">Administrativo</v-list-item>
         </v-list-item-group>
