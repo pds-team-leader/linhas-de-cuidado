@@ -68,7 +68,7 @@ export default {
         email: this.input.username,
         password: this.input.password,
       });
-      
+
       const token = `Bearer ${res.data.token}`;
 
       try {
