@@ -19,6 +19,7 @@
       </v-list>
     </v-navigation-drawer>
 
+    <v-app-bar app class="">
     <v-app-bar app>
       <v-app-bar-nav-icon
         color="primary"
@@ -27,11 +28,20 @@
       <v-toolbar-title>
         <span class="title" @click="$router.push('/')">Linhas de Cuidado</span>
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+        <v-btn
+          v-if="admin"
+          style="margin-left: 1rem"
+          color="error"
+          @click="logout"
+        >
+          <div class="button-text">Logout</div>
+        </v-btn>
     </v-app-bar>
 
     <v-main>
       <v-header v-show="isHome" />
-      <router-view ref="routerRef"></router-view>
+      <router-view ref="routerRef" @logado="admin = true" ></router-view>
     </v-main>
 
     <v-footer color="primary" class="justify-center">
@@ -46,6 +56,7 @@
 </template>
 
 <script>
+import api from './services/api';
 import VHeader from './components/Header.vue';
 
 export default {
@@ -55,7 +66,16 @@ export default {
   data() {
     return {
       drawer: false,
+      admin: false,
     };
+  },
+  methods: {
+    logout() {
+      delete api.defaults.headers.common.Authorization;
+      this.admin = false;
+
+      this.$router.push('/login');
+    },
   },
   computed: {
     isHome() {
@@ -99,5 +119,20 @@ export default {
     color: #ffffff;
     margin: 0;
   }
+}
+
+.appbar {
+  display:flex;
+  justify-content: space-between !important;
+}
+
+.button-text {
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.75px;
+  color: #ffffff;
 }
 </style>

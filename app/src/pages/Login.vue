@@ -64,30 +64,21 @@ export default {
   },
   methods: {
     async authenticate() {
-      console.log('Mamae estou autenticando');
-
-      console.log('USER', this.input.username);
-      console.log('PASSWORD', this.input.password);
-
       const res = await api.post('/auth/authenticate', {
         email: this.input.username,
         password: this.input.password,
       });
 
-      console.log('Vou TENTAR hein');
+      const token = `Bearer ${res.data.token}`;
 
       try {
-        api.defaults.headers.common.Authorization = res.data.token;
+        api.defaults.headers.common.Authorization = token;
+        this.$emit('logado');
 
-        console.log('AUTH', api.defaults.headers.common.Authorization);
-
-        // res.sendStatus(200).send('Auth successfull');
         this.$router.push('/');
-        console.log('login rolou');
       } catch (err) {
         // to-do warning alert
         if (err) this.$router.push('/login');
-        console.log('login não rolou');
       }
     },
   },

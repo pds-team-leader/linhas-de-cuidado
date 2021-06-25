@@ -74,7 +74,7 @@
                 color="primary"
                 type="submit"
                 :disabled="!isValid"
-                @click="addDirectory"
+                @click.prevent.stop="addDirectory"
               >
                 Salvar
                 </v-btn>
@@ -96,7 +96,6 @@ export default {
     return {
       sections: [],
       directory: {},
-      admin: true,
       isValid: false,
       inputRules: [
         (v) => !!v || 'Campo Obrigatório',
@@ -109,6 +108,9 @@ export default {
     },
     guia() {
       return String(this.$route.params.guia);
+    },
+    admin() {
+      return api.defaults.headers.common.Authorization;
     },
   },
   mounted() {

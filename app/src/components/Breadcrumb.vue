@@ -8,7 +8,7 @@
       <template v-slot:item="{ item }">
       <v-breadcrumbs-item
         v-if="item.text === 'Home'"
-        :href="item.href"
+        :to="item.href"
         :disabled="item.disabled"
         ripple
       >
@@ -17,7 +17,7 @@
 
       <v-breadcrumbs-item
         v-else
-        :href="item.href"
+        :to="item.href"
         :disabled="item.disabled"
         ripple
       >
