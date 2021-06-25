@@ -68,9 +68,12 @@ export default {
         email: this.input.username,
         password: this.input.password,
       });
+
+      const token = `Bearer ${res.data.token}`;
+
       try {
-        api.defaults.headers.common.Authorization = res.data.token;
-        // res.sendStatus(200).send('Auth successfull');
+        api.defaults.headers.common.Authorization = token;
+        this.$emit('logado');
         this.$router.push('/');
       } catch (err) {
         // to-do warning alert
