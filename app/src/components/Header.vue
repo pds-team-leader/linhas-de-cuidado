@@ -12,7 +12,7 @@
     >
       O que você procura?
     </p>
-    <v-col cols="6" sm="6" md="6">
+    <v-col sm="6" md="6">
       <v-autocomplete
         slot="extension"
         v-model="select"
