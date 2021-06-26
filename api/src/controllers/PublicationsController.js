@@ -1,4 +1,4 @@
-import Publication from '../models/Publications';
+import Publication from '../models/Publication';
 
 export default {
   async indexAll(req, res) {

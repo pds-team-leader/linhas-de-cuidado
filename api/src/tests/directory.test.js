@@ -29,7 +29,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        guide: 0,
+        tagIds: [2, 5, 6, 4, 9],
       });
 
     expect(response.status).toBe(200);
@@ -76,14 +76,14 @@ describe('Endpoints CRUD de Diretórios', () => {
     done();
   });
 
-  it('Cria um diretório no guia de diabetes', async (done) => {
+  it('Lê todos os diretórios do guia de Diabetes', async (done) => {
     await request
       .post('/diabetes')
       .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        guide: 0,
+        tagIds: [1, 2, 3, 4, 5],
       });
 
     await request
@@ -109,7 +109,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        guide: 0,
+        tagIds: [2, 5, 6, 4, 9],
       });
 
     expect(response.status).toBe(200);
@@ -156,14 +156,14 @@ describe('Endpoints CRUD de Diretórios', () => {
     done();
   });
 
-  it('Cria um diretório no guia de hipertensao', async (done) => {
+  it('Lê todos os diretórios do guia de hipertensão', async (done) => {
     await request
       .post('/hipertensao')
       .set('Authorization', `bearer ${auth}`)
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        guide: 0,
+        tagIds: [1, 2, 3, 4, 5],
       });
 
     await request

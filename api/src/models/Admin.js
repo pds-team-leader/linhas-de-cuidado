@@ -1,23 +1,27 @@
-const bcrypt = require('bcryptjs');
-const Sequelize = require('sequelize');
-const connection = require('../database/index');
+const { Model, DataTypes } = require('sequelize');
 
-const Admin = connection.define('Admin', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'admin@admin.com',
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+class Admin extends Model {
+  static init(sequelize) {
+    super.init({
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'admin@admin.com',
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    }, {
+      sequelize,
+    });
+  }
+}
 
 module.exports = Admin;
