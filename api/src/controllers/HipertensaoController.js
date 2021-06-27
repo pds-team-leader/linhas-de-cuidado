@@ -84,21 +84,36 @@ export default {
   },
 
   async update(req, res) {
-    const { title, description } = req.body;
+    const { title, description, tagIds } = req.body;
     const { id } = req.params;
 
-    const directory = await Directory.findOne({ where: { id } });
-
-    if (!directory) {
-      return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } if (directory.guide !== 2) {
-      return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
-    }
-
-    directory.title = title;
-    directory.description = description;
+    let directory;
 
     try {
+      directory = await Directory.findByPk(id);
+      directory.title = title;
+      directory.description = description;
+    } catch (error) {
+      return res.status(400).json({ erro: 'Diretório não encontrado.' });
+    }
+
+    let tags = await directory.getTags();
+    tags = tags.map((tag) => tag.dataValues.id);
+
+    const addedTags = tagIds.filter((tagId) => !tags.includes(tagId));
+    const removedTags = tags.filter((tag) => !tagIds.includes(tag));
+
+    try {
+      await directory.removeTags(removedTags);
+      await directory.addTags(addedTags);
+    } catch (error) {
+      return res.status(400).json({
+        erro: error,
+      });
+    }
+
+    try {
+      console.log('DIRECTORIUM', directory);
       await directory.save();
     } catch (error) {
       return res.status(400).json({

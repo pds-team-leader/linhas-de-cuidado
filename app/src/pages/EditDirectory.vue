@@ -10,7 +10,7 @@
             outlined
             max-height="56px"
           >
-            <p class="title" >Nova publicação</p>
+            <p class="title" >Editar publicação</p>
           </v-sheet>
 
           <v-container class="forms">
@@ -34,6 +34,19 @@
                     required
                     style="max-width: 335px;"
                   />
+                  <v-autocomplete
+                    class="vautocomplete"
+                    v-model="directory.tags"
+                    :items="tags"
+                    dense
+                    outlined
+                    multiple
+                    color="primary"
+                    label="Tags"
+                    height="106px"
+                    return-object
+                    @input="handleAutocompleteInput"
+                  ></v-autocomplete>
               </v-row>
               <div v-for="(section) in sections" :key="section.id">
                 <v-row>
@@ -100,6 +113,9 @@ export default {
       inputRules: [
         (v) => !!v || 'Campo Obrigatório',
       ],
+      tags: [],
+      originals: [],
+      selectedTags: [],
     };
   },
   computed: {
@@ -116,32 +132,54 @@ export default {
   mounted() {
     this.getDirectory();
     this.getPublications();
+    this.getTags();
   },
   methods: {
+    handleAutocompleteInput(value) {
+      this.selectedTags = value;
+    },
     addSection() {
-      this.sections.push({ title: '', text: '' });
+      this.sections.push({ title: '', description: '' });
+    },
+    async getTags() {
+      const response = await api.get('/tag');
+      this.tags = response.data;
     },
     async getDirectory() {
       const response = await api.get(`/${this.guia}/${this.dirId}`);
       this.directory = response.data;
+      this.selectedTags = this.directory.tags.map((tag) => tag);
     },
     async getPublications() {
       const response = await api.get(`/publications/dir/${this.dirId}`);
       this.sections = response.data;
+      this.originals = this.sections.concat();
     },
     async addDirectory() {
+      this.selectedTags = this.selectedTags.map((tag) => tag.id);
+
       await api.put(`/${this.guia}/${this.dirId}`, {
         title: this.directory.title,
         description: this.directory.description,
+        tagIds: this.selectedTags,
       });
 
       await this.sections.forEach(async (section) => {
-        await api.put(`/publications/${section.id}`, {
-          title: section.title,
-          description: section.description,
-          isFromGuide: section.isFromGuide,
-          directory: section.directory,
-        });
+        if (section.id !== undefined) {
+          await api.put(`/publications/${section.id}`, {
+            title: section.title,
+            description: section.description,
+            isFromGuide: section.isFromGuide,
+            directory: section.directory,
+          });
+        } else {
+          await api.post('/publications', {
+            title: section.title,
+            description: section.description,
+            isFromGuide: true,
+            directory: this.dirId,
+          });
+        }
       });
 
       this.$router.push('/');

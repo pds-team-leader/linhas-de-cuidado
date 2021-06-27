@@ -29,7 +29,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        tagIds: [2, 5, 6, 4, 9],
+        tagIds: [1, 2, 3],
       });
 
     expect(response.status).toBe(200);
@@ -57,7 +57,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste Alterado',
         description: 'Descrição',
-        guide: 0,
+        tagIds: [2, 4, 5],
       });
 
     expect(response.status).toBe(200);
@@ -109,7 +109,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        tagIds: [2, 5, 6, 4, 9],
+        tagIds: [6, 7, 8],
       });
 
     expect(response.status).toBe(200);
@@ -137,7 +137,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste Alterado',
         description: 'Descrição',
-        guide: 0,
+        tagIds: [6, 7, 9],
       });
 
     expect(response.status).toBe(200);

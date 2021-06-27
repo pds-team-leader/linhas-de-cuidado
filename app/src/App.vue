@@ -19,7 +19,6 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app class="">
     <v-app-bar app>
       <v-app-bar-nav-icon
         color="primary"
