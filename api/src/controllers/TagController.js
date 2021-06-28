@@ -64,7 +64,7 @@ export default {
     }
 
     try {
-      tag.destroy();
+      await tag.destroy();
     } catch (error) {
       return res.status(400).json({
         erro: `Falha ao apagar a tag: ${error}`,
