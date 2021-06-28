@@ -153,6 +153,38 @@ const routes = [
       ],
     },
   },
+  {
+    path: '/tags',
+    name: 'Tags',
+    component: () => import('../pages/Tags.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Tags',
+        },
+      ],
+    },
+  },
+  {
+    path: '/results/:id',
+    name: 'Results',
+    component: () => import('../pages/Results.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Resultados',
+        },
+      ],
+    },
+  },
 ];
 
 export default new VueRouter({
