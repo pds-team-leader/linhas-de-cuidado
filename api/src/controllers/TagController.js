@@ -35,13 +35,15 @@ export default {
   async update(req, res) {
     const { text } = req.body;
     const { id } = req.params;
-    const tag = await Tag.findByPk(id);
 
-    if (!tag) {
+    let tag;
+
+    try {
+      tag = await Tag.findByPk(id);
+      tag.text = text;
+    } catch (error) {
       return res.status(400).json({ erro: 'Tag não encontrada' });
     }
-
-    tag.text = text;
 
     try {
       await tag.save();
