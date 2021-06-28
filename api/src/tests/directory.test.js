@@ -182,6 +182,86 @@ describe('Endpoints CRUD de Diretórios', () => {
     done();
   });
 
+  it('Cria um diretório na guia de extras', async (done) => {
+    const response = await request
+      .post('/extras')
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        title: 'Título Teste',
+        description: 'Descrição',
+        guide: 0,
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.title).toBe('Título Teste');
+
+    testId = response.body.id;
+
+    done();
+  });
+
+  it('Lê um diretório na guia de extras', async (done) => {
+    const response = await request
+      .get(`/extras/${testId}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.title).toBe('Título Teste');
+
+    done();
+  });
+
+  it('Altera um diretório na guia de extras', async (done) => {
+    const response = await request
+      .put(`/extras/${testId}`)
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        title: 'Título Teste Alterado',
+        description: 'Descrição',
+        guide: 0,
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.title).toBe('Título Teste Alterado');
+
+    done();
+  });
+
+  it('Apaga um diretório na guia de extras', async (done) => {
+    const response = await request
+      .delete(`/extras/${testId}`)
+      .set('Authorization', `bearer ${auth}`);
+
+    expect(response.status).toBe(200);
+
+    done();
+  });
+
+  it('Cria um diretório na guia de extras', async (done) => {
+    await request
+      .post('/extras')
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        title: 'Título Teste',
+        description: 'Descrição',
+        guide: 0,
+      });
+
+    await request
+      .post('/extras')
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        title: 'Título Teste 2',
+        description: 'Descrição',
+        guide: 0,
+      });
+
+    const response = await request.get('/extras');
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBeGreaterThanOrEqual(2);
+    done();
+  });
+
   it('Retorna erro ao criar diretório inválido', async (done) => {
     const resDiabetes = await request
       .post('/diabetes')
@@ -201,8 +281,18 @@ describe('Endpoints CRUD de Diretórios', () => {
         guide: 0,
       });
 
-    expect(resDiabetes.status).toBe(400);
-    expect(resHipertensao.status).toBe(400);
+      const resExtras = await request
+      .post('/extras')
+      .set('Authorization', `bearer ${auth}`)
+      .send({
+        title: null,
+        description: 'Descrição',
+        guide: 0,
+      });
+
+      expect(resDiabetes.status).toBe(400);
+      expect(resHipertensao.status).toBe(400);
+      expect(resExtras.status).toBe(400);
 
     done();
   });
@@ -216,8 +306,13 @@ describe('Endpoints CRUD de Diretórios', () => {
       .put('/hipertensao/-1')
       .set('Authorization', `bearer ${auth}`);
 
+      const resExtras = await request
+      .put('/extras/-1')
+      .set('Authorization', `bearer ${auth}`);
+
     expect(resDiabetes.status).toBe(400);
     expect(resHipertensao.status).toBe(400);
+    expect(resExtras.status).toBe(400);
 
     done();
   });
@@ -231,8 +326,13 @@ describe('Endpoints CRUD de Diretórios', () => {
       .delete('/hipertensao/-1')
       .set('Authorization', `bearer ${auth}`);
 
+      const resExtras = await request
+      .delete('/extras/-1')
+      .set('Authorization', `bearer ${auth}`);
+
     expect(resDiabetes.status).toBe(400);
     expect(resHipertensao.status).toBe(400);
+    expect(resExtras.status).toBe(400);
 
     done();
   });
