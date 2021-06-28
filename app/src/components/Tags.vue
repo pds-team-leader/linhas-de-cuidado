@@ -5,13 +5,14 @@
           <p>
             <strong>Tags:  </strong>
             <v-btn
-            v-for="tag in tags"
-            :key="tag"
-            text
-            small
-            color="primary"
+              v-for="tag in tags"
+              :key="tag.id"
+              text
+              small
+              color="primary"
+              :to="`/results/${tag.id}`"
             >
-              {{ tag }}
+              {{ tag.text }}
             </v-btn>
           </p>
       </v-row>

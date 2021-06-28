@@ -2,7 +2,15 @@ import Tag from '../models/Tag';
 
 export default {
   async indexAll(req, res) {
-    const tag = await Tag.findAll();
+    const tag = await Tag.findAll({
+      include: {
+        association: 'directories',
+        attributes: ['id', 'title', 'description', 'guide'],
+        through: {
+          attributes: [],
+        },
+      },
+    });
 
     if (!tag) {
       return res.status(400).json({ erro: 'Nenhuma tag encontrada' });
@@ -12,7 +20,15 @@ export default {
 
   async indexOne(req, res) {
     const { id } = req.params;
-    const tag = await Tag.findByPk(id);
+    const tag = await Tag.findByPk(id, {
+      include: {
+        association: 'directories',
+        attributes: ['id', 'title', 'description', 'guide'],
+        through: {
+          attributes: [],
+        },
+      },
+    });
 
     if (!tag) {
       return res.status(400).json({ erro: 'Nunhuma tag encontrada' });

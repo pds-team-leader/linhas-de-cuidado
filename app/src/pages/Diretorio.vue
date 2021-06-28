@@ -68,7 +68,7 @@ export default {
       let tags;
 
       try {
-        tags = this.directory.tags.map((tag) => tag.text);
+        tags = this.directory.tags.map((tag) => ({ text: tag.text, id: tag.id }));
       } catch (error) {
         return [];
       }

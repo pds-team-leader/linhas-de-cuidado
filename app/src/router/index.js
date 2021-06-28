@@ -133,6 +133,22 @@ const routes = [
       ],
     },
   },
+  {
+    path: '/results/:id',
+    name: 'Results',
+    component: () => import('../pages/Results.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Resultados',
+        },
+      ],
+    },
+  },
 ];
 
 export default new VueRouter({
