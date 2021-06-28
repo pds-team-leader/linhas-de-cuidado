@@ -3,6 +3,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import routes from './routes';
 
+require('./database');
+
 const app = express();
 
 app.use(cors());
