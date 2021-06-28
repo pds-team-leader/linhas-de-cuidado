@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="admin">
     <breadcrumb />
     <v-overlay color="primary" :value="showAlert" transition="fade-transition"/>
     <v-container class="vcontainer">
@@ -141,6 +141,9 @@ export default {
   computed: {
     hasChanges() {
       return Boolean(this.tags.some((tag) => tag.changed === true));
+    },
+    admin() {
+      return api.defaults.headers.common.Authorization;
     },
   },
   watch: {

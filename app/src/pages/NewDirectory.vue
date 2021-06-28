@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="admin">
     <breadcrumb/>
     <v-container class="vcontainer">
       <v-row>
