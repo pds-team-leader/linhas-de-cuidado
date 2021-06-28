@@ -2,7 +2,15 @@ import Tag from '../models/Tag';
 
 export default {
   async indexAll(req, res) {
-    const tag = await Tag.findAll();
+    const tag = await Tag.findAll({
+      include: {
+        association: 'directories',
+        attributes: ['id', 'title', 'description', 'guide'],
+        through: {
+          attributes: [],
+        },
+      },
+    });
 
     if (!tag) {
       return res.status(400).json({ erro: 'Nenhuma tag encontrada' });
@@ -12,7 +20,15 @@ export default {
 
   async indexOne(req, res) {
     const { id } = req.params;
-    const tag = await Tag.findByPk(id);
+    const tag = await Tag.findByPk(id, {
+      include: {
+        association: 'directories',
+        attributes: ['id', 'title', 'description', 'guide'],
+        through: {
+          attributes: [],
+        },
+      },
+    });
 
     if (!tag) {
       return res.status(400).json({ erro: 'Nunhuma tag encontrada' });
@@ -21,36 +37,29 @@ export default {
   },
 
   async store(req, res) {
-    const { text, link } = req.body;
+    const { text } = req.body;
     let tag;
 
     try {
-      tag = await Tag.create({ text, link });
+      tag = await Tag.create({ text });
     } catch (error) {
       return res.status(400).json({ erro: `Falha ao criar nova Tag: ${error}` });
     }
     return res.json(tag);
   },
 
-  async assign(req, res) {
-    // To-do
-  },
-
-  async unassign(req, res) {
-    // Tod-do
-  },
-
   async update(req, res) {
-    const { text, link } = req.body;
+    const { text } = req.body;
     const { id } = req.params;
-    const tag = await Tag.findByPk(id);
 
-    if (!tag) {
+    let tag;
+
+    try {
+      tag = await Tag.findByPk(id);
+      tag.text = text;
+    } catch (error) {
       return res.status(400).json({ erro: 'Tag não encontrada' });
     }
-
-    tag.text = text;
-    tag.link = link;
 
     try {
       await tag.save();
@@ -71,7 +80,7 @@ export default {
     }
 
     try {
-      tag.destroy();
+      await tag.destroy();
     } catch (error) {
       return res.status(400).json({
         erro: `Falha ao apagar a tag: ${error}`,

@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Directory extends Model {
+class Publication extends Model {
   static init(sequelize) {
     super.init({
       id: {
@@ -9,29 +9,29 @@ class Directory extends Model {
         allowNull: false,
         primaryKey: true,
       },
+      directory: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'Diretório',
+        defaultValue: 'Publicação',
       },
       description: {
         type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'Diretório',
+        allowNull: true,
+        defaultValue: 'Descrição da publicação',
       },
-      guide: {
-        type: DataTypes.INTEGER,
+      isFromGuide: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: false,
       },
     }, {
       sequelize,
     });
   }
-
-  static associate(models) {
-    this.belongsToMany(models.Tag, { foreignKey: 'id_directory', through: 'directories_tags', as: 'tags' });
-  }
 }
 
-module.exports = Directory;
+module.exports = Publication;

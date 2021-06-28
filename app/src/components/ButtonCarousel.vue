@@ -16,6 +16,7 @@
           color="primary"
           elevation="2"
           small
+          :to="`/results/${option.id}`"
         >
           {{ option.name }}
         </v-btn>
@@ -31,48 +32,63 @@ export default {
       options: [
         {
           name: 'Classificação',
+          id: 1,
         },
         {
           name: 'Diagnóstico',
+          id: 2,
         },
         {
           name: 'Medicação',
+          id: 3,
         },
         {
           name: 'Prevenção',
+          id: 4,
         },
         {
           name: 'Consulta',
+          id: 5,
         },
         {
           name: 'Exame',
+          id: 6,
         },
         {
           name: 'Tratamento farmacológico',
+          id: 7,
         },
         {
           name: 'Tratamento não farmacológico',
+          id: 8,
         },
         {
           name: 'Complicações',
+          id: 9,
         },
         {
           name: 'Orientações',
+          id: 10,
         },
         {
           name: 'Avaliação',
+          id: 11,
         },
         {
           name: 'Insulina',
+          id: 12,
         },
         {
           name: 'Monitoramento',
+          id: 13,
         },
         {
           name: 'Rastreamento',
+          id: 14,
         },
         {
           name: 'Comorbidades',
+          id: 15,
         },
       ],
     };

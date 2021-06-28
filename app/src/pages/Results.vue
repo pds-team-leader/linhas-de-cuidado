@@ -1,13 +1,16 @@
 <template>
   <div>
-    <breadcrumb />
     <v-overlay color="primary" :value="overlay">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
     </v-overlay>
+    <breadcrumb />
     <v-container class="vcontainer">
       <v-row>
         <v-col class="main-col">
-          <v-alert
+           <v-alert
             v-if="showAlert"
             class="alert"
             :style="`top: ${alertPosition}% !important`"
@@ -23,20 +26,12 @@
               <v-btn color="primary" @click="showAlert = false">Cancelar</v-btn>
             </v-row>
           </v-alert>
-          <v-sheet
-            v-if="admin"
-            class="vsheet pt-3"
-            outlined
-            max-height="56px"
-          >
-            <p @click="$router.push('/nova-publicacao')" class="title" >+ Novo Diretório</p>
-          </v-sheet>
-          <p class="mt-5" v-if="directories.length === 0">
+          <p class="mt-5" v-if="tag.directories.length === 0">
               Não há publicações
           </p>
           <v-sheet
             class="vsheet"
-            v-for="dir in directories"
+            v-for="dir in tag.directories"
             :key="dir.id"
             outlined
           >
@@ -45,7 +40,7 @@
                 <div class="text-col">
                   <span
                     class="title"
-                    @click="goToPublications(dir.id)"
+                    @click="goToPublications(dir.id, dir.guide)"
                   >
                     {{dir.title}}
                   </span>
@@ -58,14 +53,14 @@
                   <v-btn
                     style="border-radius: 12px"
                     color="primary"
-                    @click="editar(dir.id)"
+                    @click="editar(dir.id, dir.guide)"
                   >
                     <div class="button-text">Editar</div>
                   </v-btn>
                   <v-btn
                     style="margin-left: 1rem; border-radius: 12px"
                     color="error"
-                    @click="dirToDelete = dir.id; showAlert = true"
+                    @click="guideToDelete = dir.guide; dirToDelete = dir.id; showAlert = true"
                   >
                     <div class="button-text">Excluir</div>
                   </v-btn>
@@ -80,7 +75,7 @@
                   :ripple="false"
                   height="156px"
                   width="100%"
-                  @click="goToPublications(dir.id)"
+                  @click="goToPublications(dir.id, dir.guide)"
                 >
                   <v-icon large color="primary">mdi-chevron-right</v-icon>
                 </v-btn>
@@ -98,22 +93,24 @@ import api from '../services/api';
 import Breadcrumb from '../components/Breadcrumb.vue';
 
 export default {
-  components: { Breadcrumb },
-  name: 'Guia',
   data() {
     return {
-      directories: '',
+      tag: {
+        directories: '',
+      },
       dirToDelete: null,
       showAlert: false,
       alertPosition: 0,
+      guideToDelete: '',
     };
   },
+  components: { Breadcrumb },
   computed: {
-    guia() {
-      return String(this.$route.name).toLowerCase();
-    },
     overlay() {
-      return this.directories === '';
+      return this.tag.directories === '';
+    },
+    tagId() {
+      return this.$route.params.id;
     },
     admin() {
       return api.defaults.headers.common.Authorization;
@@ -125,29 +122,42 @@ export default {
     },
   },
   methods: {
-    async getDirectories() {
-      const response = await api.get(`/${this.guia}`);
-
-      this.directories = response.data;
+    async getResults() {
+      const response = await api.get(`/tag/${this.tagId}`);
+      this.tag = response.data;
     },
-    goToPublications(id) {
-      this.$router.push(`/guia/${this.guia}/${id}`);
+    goToPublications(id, guideId) {
+      let guide = 'diabetes';
+      if (guideId === 2) {
+        guide = 'hipertensao';
+      }
+      this.$router.push(`/guia/${guide}/${id}`);
     },
     reset() {
       this.directories = '';
-      this.getDirectories();
+      this.getResults();
     },
-    async editar(id) {
-      this.$router.push(`/editar-publicacao/${this.guia}/${id}`);
+    async editar(id, guideId) {
+      let guide = 'diabetes';
+      if (guideId === 2) {
+        guide = 'hipertensao';
+      }
+      this.$router.push(`/editar-publicacao/${guide}/${id}`);
     },
     async excluir() {
-      await api.delete(`/${this.guia}/${this.dirToDelete}`);
+      let guide = 'diabetes';
+      if (this.guideToDelete === 2) {
+        guide = 'hipertensao';
+      }
+      await api.delete(`/${guide}/${this.dirToDelete}`);
       this.dirToDelete = null;
+      this.guideToDelete = '';
       this.showAlert = false;
       this.reset();
     },
   },
   mounted() {
+    this.getResults();
     this.reset();
   },
 };
@@ -234,12 +244,6 @@ export default {
   line-height: 24px;
   letter-spacing: 0.75px;
   color: #ffffff;
-}
-
-.alert {
-  position: absolute;
-  margin-top: 200px;
-  z-index: 12;
 }
 
 </style>

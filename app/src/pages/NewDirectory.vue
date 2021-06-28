@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="admin">
     <breadcrumb/>
     <v-container class="vcontainer">
       <v-row>
@@ -31,7 +31,8 @@
                   style="max-width: 335px"
                 ></v-select>
               </v-row>
-              <v-row justify="space-between" style="max-width: 690px">
+              <v-row class="directoryRow">
+                <v-col style="padding: 0">
                   <v-text-field
                     v-model="dirTitle"
                     outlined
@@ -50,6 +51,20 @@
                     required
                     style="max-width: 335px;"
                   />
+                </v-col>
+                <v-col style="padding: 0">
+                  <v-autocomplete
+                    class="vautocomplete"
+                    v-model="selectedTags"
+                    :items="tags"
+                    dense
+                    outlined
+                    multiple
+                    color="primary"
+                    label="Tags"
+                    height="106px"
+                  ></v-autocomplete>
+                </v-col>
               </v-row>
               <div v-for="(section, index) in sections" :key="`${index}`">
                 <v-row>
@@ -124,29 +139,45 @@ export default {
       inputRules: [
         (v) => !!v || 'Campo Obrigatório',
       ],
+      tags: [],
+      selectedTags: [],
     };
   },
   methods: {
     addSection() {
       this.sections.push({ title: '', text: '' });
     },
+    trataTags() {
+      this.selectedTags = this.tags
+        .filter((tag) => this.selectedTags.includes(tag.text))
+        .map((selectedTag) => selectedTag.id);
+    },
     async addDirectory() {
+      this.trataTags();
       const directory = await api.post(`/${this.guia}`, {
         title: this.dirTitle,
         description: this.dirDescription,
+        tagIds: this.selectedTags,
       });
 
       this.sections.forEach(async (section) => {
         await api.post('/publications', {
           title: section.title,
+          directory: directory.data.id,
           description: section.text,
           isFromGuide: true,
-          directory: directory.data.id,
         });
       });
 
       this.$router.push(`/guia/${this.guia}`);
     },
+    async getTags() {
+      const response = await api.get('/tag');
+      this.tags = response.data;
+    },
+  },
+  mounted() {
+    this.getTags();
   },
   computed: {
     admin() {
@@ -201,6 +232,19 @@ export default {
   line-height: 32px ;
   letter-spacing: 1px !important;
   color: #3988B8;
+}
+
+.directoryRow {
+  display: flex;
+  padding: 0;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+.vautocomplete {
+  overflow: hidden;
 }
 
 </style>
