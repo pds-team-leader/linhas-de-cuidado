@@ -27,6 +27,18 @@ const Publication = connection.define('Publication', {
     allowNull: false,
     defaultValue: false,
   },
+  imageType: {
+    type:Sequelize.STRING,
+    allowNull: true
+  },
+  imageName:{
+    type: Sequelize.STRING,
+     allowNull: true
+  },
+  imagePath: {
+    type: Sequelize.STRING, 
+    allowNull: true
+  }
 });
 
 export default Publication;

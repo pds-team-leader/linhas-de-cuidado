@@ -1,5 +1,6 @@
 const supertest = require('supertest');
 const app = require('../app');
+const { password } = require('../config/database');
 require('dotenv').config();
 
 const request = supertest(app);
@@ -13,11 +14,10 @@ describe('Endpoints Admin', () => {
       .post('/auth/authenticate')
       .send({
         email: process.env.ADMIN1_EMAIL,
-        password: process.env.ADMIN1_PASSWORD,
+        password: process.env.ADMIN1_CLEAN_PASSWORD,
       });
 
     expect(200);
-
     auth = res.body.token;
 
     done();
@@ -28,7 +28,7 @@ describe('Endpoints Admin', () => {
       .set('Authorization', `bearer ${auth}`)
       .send({
         email: process.env.TESTE_EMAIL,
-        password: process.env.TESTE_PASSWORD,
+        password: process.env.TESTE_CLEAN_PASSWORD,
       });
 
     expect(response.status).toBe(200);

@@ -13,7 +13,7 @@ describe('Endpoints CRUD de tags', () => {
       .post('/auth/authenticate')
       .send({
         email: process.env.ADMIN1_EMAIL,
-        password: process.env.ADMIN1_PASSWORD,
+        password: process.env.ADMIN1_CLEAN_PASSWORD,
       });
 
     expect(200);
