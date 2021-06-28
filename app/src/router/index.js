@@ -117,6 +117,22 @@ const routes = [
       ],
     },
   },
+  {
+    path: '/tags',
+    name: 'Tags',
+    component: () => import('../pages/Tags.vue'),
+    meta: {
+      breadcrumbs: [
+        {
+          text: 'Home',
+          route: '/',
+        },
+        {
+          text: 'Tags',
+        },
+      ],
+    },
+  },
 ];
 
 export default new VueRouter({

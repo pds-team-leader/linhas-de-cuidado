@@ -13,13 +13,17 @@
           @click="$router.push('/guia/hipertensao')"
           color="primary">Guia de Hipertensão</v-list-item>
           <v-list-item
+          v-if="!admin"
           @click="$router.push('/login')"
           color="primary">Administrativo</v-list-item>
+          <v-list-item
+          v-if="admin"
+          @click="$router.push('/tags')"
+          color="primary">Tags</v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app class="">
     <v-app-bar app>
       <v-app-bar-nav-icon
         color="primary"
@@ -44,7 +48,7 @@
       <router-view ref="routerRef" @logado="admin = true" ></router-view>
     </v-main>
 
-    <v-footer color="primary" class="justify-center">
+    <v-footer color="primary" class="footer">
       <div class="footer-container">
         <img src="./assets/logo-footer.svg" />
         <p class="footer-text">

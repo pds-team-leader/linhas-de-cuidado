@@ -7,6 +7,22 @@
     <v-container class="vcontainer">
       <v-row>
         <v-col class="main-col">
+          <v-alert
+            v-if="showAlert"
+            class="alert"
+            :style="`top: ${alertPosition}% !important`"
+            transition="fade-transition"
+            tag="alert"
+            color="white"
+            elevation="12"
+            width="290px"
+          >
+            <p>Tem certeza que deseja deletar a publicação?</p>
+            <v-row class="mt-5 mb-1" justify="space-around">
+              <v-btn color="error" @click="excluir"> Deletar </v-btn>
+              <v-btn color="primary" @click="showAlert = false">Cancelar</v-btn>
+            </v-row>
+          </v-alert>
           <v-sheet
             v-if="admin"
             class="vsheet pt-3"
@@ -49,7 +65,7 @@
                   <v-btn
                     style="margin-left: 1rem; border-radius: 12px"
                     color="error"
-                    @click="excluir(dir.id)"
+                    @click="dirToDelete = dir.id; showAlert = true"
                   >
                     <div class="button-text">Excluir</div>
                   </v-btn>
@@ -87,6 +103,9 @@ export default {
   data() {
     return {
       directories: '',
+      dirToDelete: null,
+      showAlert: false,
+      alertPosition: 0,
     };
   },
   computed: {
@@ -98,6 +117,11 @@ export default {
     },
     admin() {
       return api.defaults.headers.common.Authorization;
+    },
+  },
+  watch: {
+    showAlert() {
+      this.alertPosition = (window.scrollY / (window.screen.availHeight * 1.5)) * 100;
     },
   },
   methods: {
@@ -116,10 +140,11 @@ export default {
     async editar(id) {
       this.$router.push(`/editar-publicacao/${this.guia}/${id}`);
     },
-    async excluir(id) {
-      const response = await api.delete(`/${this.guia}/${id}`);
+    async excluir() {
+      await api.delete(`/${this.guia}/${this.dirToDelete}`);
+      this.dirToDelete = null;
+      this.showAlert = false;
       this.reset();
-      return response;
     },
   },
   mounted() {
@@ -209,6 +234,12 @@ export default {
   line-height: 24px;
   letter-spacing: 0.75px;
   color: #ffffff;
+}
+
+.alert {
+  position: absolute;
+  margin-top: 200px;
+  z-index: 12;
 }
 
 </style>

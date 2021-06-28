@@ -21,36 +21,29 @@ export default {
   },
 
   async store(req, res) {
-    const { text, link } = req.body;
+    const { text } = req.body;
     let tag;
 
     try {
-      tag = await Tag.create({ text, link });
+      tag = await Tag.create({ text });
     } catch (error) {
       return res.status(400).json({ erro: `Falha ao criar nova Tag: ${error}` });
     }
     return res.json(tag);
   },
 
-  async assign(req, res) {
-    // To-do
-  },
-
-  async unassign(req, res) {
-    // Tod-do
-  },
-
   async update(req, res) {
-    const { text, link } = req.body;
+    const { text } = req.body;
     const { id } = req.params;
-    const tag = await Tag.findByPk(id);
 
-    if (!tag) {
+    let tag;
+
+    try {
+      tag = await Tag.findByPk(id);
+      tag.text = text;
+    } catch (error) {
       return res.status(400).json({ erro: 'Tag não encontrada' });
     }
-
-    tag.text = text;
-    tag.link = link;
 
     try {
       await tag.save();
