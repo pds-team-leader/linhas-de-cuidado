@@ -36,8 +36,12 @@ router.post('/register', async (req, res) => {
 
 router.post('/authenticate', async (req, res) => {
   const { email, password } = req.body;
-  const admin = await Admin.findOne({ where: { email } });
-  if (!admin) {
+
+  let admin;
+
+  try {
+    admin = await Admin.findOne({ where: { email } });
+  } catch (error) {
     return res.status(400).send({ error: 'Administrador não encontrado.' });
   }
 

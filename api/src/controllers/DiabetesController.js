@@ -1,16 +1,38 @@
-const Directory = require('../models/Directory');
+import Directory from '../models/Directory';
+import Tag from '../models/Tag';
 
-module.exports = {
+export default {
 
   async store(req, res) {
-    const { title, description } = req.body;
+    const { title, description, tagIds } = req.body;
     const guide = 1;
+
     let directory;
+    const erros = [];
 
     try {
-      directory = await Directory.create({ title, description, guide });
+      directory = await Directory.create({
+        title, description, guide,
+      });
     } catch (error) {
-      return res.status(400).json({ erro: 'Falha ao criar novo Diretório.' });
+      erros.push('Falha ao criar novo Diretório.');
+    }
+
+    try {
+      tagIds.map(async (id) => {
+        const tag = await Tag.findByPk(id);
+
+        if (!tag) {
+          erros.push('Uma ou mais das tags selecionadas não foi encontrada.');
+        }
+        await directory.addTag(tag);
+      });
+    } catch (error) {
+      erros.push(error);
+    }
+
+    if (erros.length > 0) {
+      return res.status(400).json({ erros });
     }
 
     return res.json(directory);
@@ -20,6 +42,14 @@ module.exports = {
     const directory = await Directory.findAll({
       where: {
         guide: 1,
+      },
+      include: {
+        association: 'tags',
+        as: 'tags',
+        attributes: ['id', 'text'],
+        through: {
+          attributes: [],
+        },
       },
     });
 
@@ -33,7 +63,18 @@ module.exports = {
   async indexOne(req, res) {
     const { id } = req.params;
 
-    const directory = await Directory.findByPk(id);
+    const directory = await Directory.findByPk(id, {
+      include: [
+        {
+          model: Tag,
+          as: 'tags',
+          attributes: ['id', 'text'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
 
     if (!directory) {
       return res.json({ erro: 'Diretório não encontrado.' });
@@ -43,19 +84,35 @@ module.exports = {
   },
 
   async update(req, res) {
-    const { title, description } = req.body;
+    const {
+      title, description, tagIds,
+    } = req.body;
     const { id } = req.params;
 
-    const directory = await Directory.findOne({ where: { id } });
+    let directory;
 
-    if (!directory) {
+    try {
+      directory = await Directory.findByPk(id);
+      directory.title = title;
+      directory.description = description;
+    } catch (error) {
       return res.status(400).json({ erro: 'Diretório não encontrado.' });
-    } if (directory.guide !== 1) {
-      return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
-    directory.title = title;
-    directory.description = description;
+    let tags = await directory.getTags();
+    tags = tags.map((tag) => tag.dataValues.id);
+
+    const addedTags = tagIds.filter((tagId) => !tags.includes(tagId));
+    const removedTags = tags.filter((tag) => !tagIds.includes(tag));
+
+    try {
+      await directory.removeTags(removedTags);
+      await directory.addTags(addedTags);
+    } catch (error) {
+      return res.status(400).json({
+        erro: error,
+      });
+    }
 
     try {
       await directory.save();
@@ -80,7 +137,7 @@ module.exports = {
     }
 
     try {
-      directory.destroy();
+      await directory.destroy();
     } catch (error) {
       return res.status(400).json({
         erro: error,

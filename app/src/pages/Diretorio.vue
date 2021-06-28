@@ -28,6 +28,7 @@
             <p class="pub-title">{{pub.title}}</p>
             <p class="pub-description">{{pub.description}}</p>
           </div>
+          <tags v-if="tags.length" class="tags" :tags="tags"/>
         </v-col>
       </v-row>
     </v-container>
@@ -36,11 +37,12 @@
 
 <script>
 import Breadcrumb from '../components/Breadcrumb.vue';
+import Tags from '../components/Tags.vue';
 import api from '../services/api';
 
 export default {
   name: 'Diretorio',
-  components: { Breadcrumb },
+  components: { Breadcrumb, Tags },
   data() {
     return {
       directory: '',
@@ -61,6 +63,16 @@ export default {
         guia = 'hipertensao';
       }
       return guia;
+    },
+    tags() {
+      let tags;
+
+      try {
+        tags = this.directory.tags.map((tag) => ({ text: tag.text, id: tag.id }));
+      } catch (error) {
+        return [];
+      }
+      return tags;
     },
   },
   methods: {
@@ -153,23 +165,22 @@ export default {
 }
 
 .vsheet {
-  cursor: pointer;
   max-width: 900px;
   width: 100%;
   display: flex;
   justify-content: center;
   border-right: none;
   border-left: none;
-
-  &:hover {
-    background-color: #ececec;
-  }
 }
 
 .main-col {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
+}
+
+.tags {
+  width: 100%;
 }
 
 </style>

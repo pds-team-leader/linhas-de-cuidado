@@ -1,23 +1,28 @@
-import Sequelize from 'sequelize';
-import connection from '../database/index';
+const { Model, DataTypes } = require('sequelize');
 
-const Tag = connection.define('Tag', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  text: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: 'Tag',
-  },
-  link: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: '/',
-  },
-});
+class Tag extends Model {
+  static init(sequelize) {
+    super.init({
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+      },
+      text: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Tag',
+      },
+    }, {
+      sequelize,
+      tableName: 'tags',
+    });
+  }
 
-export default Tag;
+  static associate(models) {
+    this.belongsToMany(models.Directory, { foreignKey: 'id_tag', through: 'directories_tags', as: 'directories' });
+  }
+}
+
+module.exports = Tag;
