@@ -136,7 +136,7 @@ export default {
     }
 
     try {
-      directory.destroy();
+      await directory.destroy();
     } catch (error) {
       return res.status(400).json({
         erro: error,

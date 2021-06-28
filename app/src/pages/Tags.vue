@@ -1,7 +1,6 @@
 <template>
   <div v-show="admin">
     <breadcrumb />
-    <v-overlay color="primary" :value="showAlert" transition="fade-transition"/>
     <v-container class="vcontainer">
       <v-row justify="center">
         <v-col class="main-col">

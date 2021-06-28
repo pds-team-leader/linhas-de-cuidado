@@ -88,7 +88,7 @@ export default {
     }
 
     try {
-      publication.destroy();
+      await publication.destroy();
     } catch (error) {
       return res.status(400).json({
         erro: `Falha ao apagar a publicação: ${error}`,
