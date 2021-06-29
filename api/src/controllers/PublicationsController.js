@@ -5,7 +5,7 @@ export default {
     const publication = await Publication.findAll();
 
     if (!publication) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+      return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
     }
     return res.json(publication);
   },
@@ -15,7 +15,7 @@ export default {
     const publication = await Publication.findByPk(id);
 
     if (!publication) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+      return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
     }
     return res.json(publication);
   },
@@ -27,7 +27,7 @@ export default {
     });
 
     if (!publications) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+      return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
     }
     return res.json(publications);
   },
@@ -36,14 +36,31 @@ export default {
     const {
       title, directory, description, isFromGuide,
     } = req.body;
-    const { mimetype, filename, path } = req.file;
-    console.log(path, filename, mimetype);
+
+    const file = {
+      mimetype: '',
+      filename: '',
+      path: '',
+    };
+
+    if (req.file) {
+      const { mimetype, filename, path } = req.file;
+      file.mimetype = mimetype;
+      file.filename = filename;
+      file.path = path;
+    }
 
     let publication;
 
     try {
       publication = await Publication.create({
-        title, directory, description, isFromGuide, imageType:mimetype, imageName:filename, imagePath:path
+        title,
+        directory,
+        description,
+        isFromGuide,
+        imageType: file.mimetype,
+        imageName: file.filename,
+        imagePath: file.path,
       });
     } catch (error) {
       return res.status(400).json({ erro: `Falha ao criar nova Publicação: ${error}` });

@@ -22,6 +22,18 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       allowNull: false,
     },
+    image_type: {
+      type: Sequelize.STRING(255),
+      allowNull: true,
+    },
+    image_name: {
+      type: Sequelize.STRING(255),
+      allowNull: true,
+    },
+    image_path: {
+      type: Sequelize.STRING(255),
+      allowNull: true,
+    },
     created_at: {
       type: Sequelize.DATE,
       allowNull: false,

@@ -22,6 +22,18 @@ describe('Endpoints CRUD de Publicações', () => {
 
     done();
   });
+  it('Retorna erro ao ler publicação inexistente', async (done) => {
+    const responseOne = await request.get('/publications/-9');
+    const responseAll = await request.get('/publications');
+    const responseAllFromDir = await request.get('/publications/dir/-9');
+
+    expect(responseOne.status).toBe(404);
+    expect(responseAllFromDir.body.length).toBe(0);
+    expect(responseAll.body.length).toBe(0);
+
+    done();
+  });
+
   it('Cria uma publicação', async (done) => {
     const response = await request
       .post('/publications')

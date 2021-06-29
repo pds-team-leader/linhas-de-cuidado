@@ -23,6 +23,18 @@ class Publication extends Model {
         allowNull: true,
         defaultValue: 'Descrição da publicação',
       },
+      imageType: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      imageName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      imagePath: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       isFromGuide: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

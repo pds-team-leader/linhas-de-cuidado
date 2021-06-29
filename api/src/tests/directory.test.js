@@ -22,6 +22,36 @@ describe('Endpoints CRUD de Diretórios', () => {
 
     done();
   });
+  it('Retorna erro ao ler diretório inexistente no guia de Diabetes', async (done) => {
+    const responseOne = await request.get('/diabetes/-9');
+    const responseAll = await request.get('/diabetes');
+
+    expect(responseOne.status).toBe(404);
+    expect(responseAll.body.length).toBe(0);
+
+    done();
+  });
+
+  it('Retorna erro ao ler diretório inexistente no guia de Hipertensão', async (done) => {
+    const responseOne = await request.get('/hipertensao/-9');
+    const responseAll = await request.get('/hipertensao');
+
+    expect(responseOne.status).toBe(404);
+    expect(responseAll.body.length).toBe(0);
+
+    done();
+  });
+
+  it('Retorna erro ao ler diretório inexistente em Conteúdos Extras', async (done) => {
+    const responseOne = await request.get('/extras/-9');
+    const responseAll = await request.get('/extras');
+
+    expect(responseOne.status).toBe(404);
+    expect(responseAll.body.length).toBe(0);
+
+    done();
+  });
+
   it('Cria um diretório no guia de diabetes', async (done) => {
     const response = await request
       .post('/diabetes')
@@ -281,7 +311,7 @@ describe('Endpoints CRUD de Diretórios', () => {
         guide: 0,
       });
 
-      const resExtras = await request
+    const resExtras = await request
       .post('/extras')
       .set('Authorization', `bearer ${auth}`)
       .send({
@@ -290,9 +320,9 @@ describe('Endpoints CRUD de Diretórios', () => {
         guide: 0,
       });
 
-      expect(resDiabetes.status).toBe(400);
-      expect(resHipertensao.status).toBe(400);
-      expect(resExtras.status).toBe(400);
+    expect(resDiabetes.status).toBe(400);
+    expect(resHipertensao.status).toBe(400);
+    expect(resExtras.status).toBe(400);
 
     done();
   });
@@ -306,7 +336,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .put('/hipertensao/-1')
       .set('Authorization', `bearer ${auth}`);
 
-      const resExtras = await request
+    const resExtras = await request
       .put('/extras/-1')
       .set('Authorization', `bearer ${auth}`);
 
@@ -326,7 +356,7 @@ describe('Endpoints CRUD de Diretórios', () => {
       .delete('/hipertensao/-1')
       .set('Authorization', `bearer ${auth}`);
 
-      const resExtras = await request
+    const resExtras = await request
       .delete('/extras/-1')
       .set('Authorization', `bearer ${auth}`);
 

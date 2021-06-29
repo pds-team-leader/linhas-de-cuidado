@@ -11,28 +11,28 @@ function generateToken(params = {}) {
   return jwt.sign(params, authConfig.secret);
 }
 
-router.post('/register', async (req, res) => {
-  const { email } = req.body;
+// router.post('/register', async (req, res) => {
+//   const { email } = req.body;
 
-  try {
-    if (await Admin.findAll({
-      where: {
-        email,
-      },
-    })) {
-      return res.status(400).send({ error: 'Administrador já cadastrado' });
-    }
-    const admin = await Admin.create(req.body);
-    admin.password = undefined;
+//   try {
+//     if (await Admin.findAll({
+//       where: {
+//         email,
+//       },
+//     })) {
+//       return res.status(400).send({ error: 'Administrador já cadastrado' });
+//     }
+//     const admin = await Admin.create(req.body);
+//     admin.password = undefined;
 
-    return res.send({
-      admin,
-      token: generateToken({ id: admin.id }),
-    });
-  } catch (err) {
-    return res.status(400).send({ error: 'Falha ao tentar cadastrar.' });
-  }
-});
+//     return res.send({
+//       admin,
+//       token: generateToken({ id: admin.id }),
+//     });
+//   } catch (err) {
+//     return res.status(400).send({ error: 'Falha ao tentar cadastrar.' });
+//   }
+// });
 
 router.post('/authenticate', async (req, res) => {
   const { email, password } = req.body;
@@ -46,7 +46,7 @@ router.post('/authenticate', async (req, res) => {
   }
 
   if (!await bcrypt.compare(password, admin.password)) {
-    return res.status(400).send({ error: 'Senha inválida.' });
+    return res.status(401).send({ error: 'Senha inválida.' });
   }
   res.send({
     admin,
