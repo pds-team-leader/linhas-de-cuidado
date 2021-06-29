@@ -8,11 +8,11 @@ require('./database');
 const app = express();
 
 const corsOptions = {
-  origin: 'https://linhas-de-cuidado.herokuapp.com/',
+  origin: 'https://linhas-de-cuidado.vercel.app/',
   optionsSuccessStatus: 200
 }
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
