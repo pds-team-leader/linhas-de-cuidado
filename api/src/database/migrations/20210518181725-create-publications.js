@@ -30,8 +30,8 @@ module.exports = {
       type: Sequelize.STRING(255),
       allowNull: true,
     },
-    image_path: {
-      type: Sequelize.STRING(255),
+    image_data: {
+      type: Sequelize.BLOB,
       allowNull: true,
     },
     created_at: {

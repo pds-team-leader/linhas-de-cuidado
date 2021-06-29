@@ -22,7 +22,7 @@ class Directory extends Model {
       guide: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 3,
       },
     }, {
       sequelize,
@@ -31,6 +31,7 @@ class Directory extends Model {
 
   static associate(models) {
     this.belongsToMany(models.Tag, { foreignKey: 'id_directory', through: 'directories_tags', as: 'tags' });
+    this.hasMany(models.Publication, { foreignKey: 'directory', as: 'publications' });
   }
 }
 

@@ -122,7 +122,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste 2',
         description: 'Descrição',
-        guide: 0,
       });
 
     const response = await request.get('/diabetes');
@@ -202,7 +201,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste 2',
         description: 'Descrição',
-        guide: 0,
       });
 
     const response = await request.get('/hipertensao');
@@ -219,7 +217,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        guide: 0,
       });
 
     expect(response.status).toBe(200);
@@ -247,7 +244,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste Alterado',
         description: 'Descrição',
-        guide: 0,
       });
 
     expect(response.status).toBe(200);
@@ -273,7 +269,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste',
         description: 'Descrição',
-        guide: 0,
       });
 
     await request
@@ -282,7 +277,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: 'Título Teste 2',
         description: 'Descrição',
-        guide: 0,
       });
 
     const response = await request.get('/extras');
@@ -299,7 +293,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: null,
         description: 'Descrição',
-        guide: 0,
       });
 
     const resHipertensao = await request
@@ -308,7 +301,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: null,
         description: 'Descrição',
-        guide: 0,
       });
 
     const resExtras = await request
@@ -317,7 +309,6 @@ describe('Endpoints CRUD de Diretórios', () => {
       .send({
         title: null,
         description: 'Descrição',
-        guide: 0,
       });
 
     expect(resDiabetes.status).toBe(400);

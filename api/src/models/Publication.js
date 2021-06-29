@@ -31,8 +31,8 @@ class Publication extends Model {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      imagePath: {
-        type: DataTypes.STRING,
+      imageData: {
+        type: DataTypes.BLOB,
         allowNull: true,
       },
       isFromGuide: {
@@ -43,6 +43,10 @@ class Publication extends Model {
     }, {
       sequelize,
     });
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Directory, { foreignKey: 'directory', as: 'directories' });
   }
 }
 

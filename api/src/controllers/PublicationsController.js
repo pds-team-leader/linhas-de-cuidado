@@ -2,7 +2,9 @@ import Publication from '../models/Publication';
 
 export default {
   async indexAll(req, res) {
-    const publication = await Publication.findAll();
+    const publication = await Publication.findAll({
+      include: { association: 'directories' },
+    });
 
     if (!publication) {
       return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
@@ -12,7 +14,9 @@ export default {
 
   async indexOne(req, res) {
     const { id } = req.params;
-    const publication = await Publication.findByPk(id);
+    const publication = await Publication.findByPk(id, {
+      include: { association: 'directories' },
+    });
 
     if (!publication) {
       return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
@@ -24,6 +28,7 @@ export default {
     const { id } = req.params;
     const publications = await Publication.findAll({
       where: { directory: id },
+      include: { association: 'directories' },
     });
 
     if (!publications) {
@@ -40,14 +45,14 @@ export default {
     const file = {
       mimetype: '',
       filename: '',
-      path: '',
+      data: '',
     };
 
     if (req.file) {
-      const { mimetype, filename, path } = req.file;
+      const { mimetype, filename, buffer } = req.file;
       file.mimetype = mimetype;
       file.filename = filename;
-      file.path = path;
+      file.data = buffer;
     }
 
     let publication;
@@ -60,7 +65,7 @@ export default {
         isFromGuide,
         imageType: file.mimetype,
         imageName: file.filename,
-        imagePath: file.path,
+        imageData: file.data,
       });
     } catch (error) {
       return res.status(400).json({ erro: `Falha ao criar nova Publicação: ${error}` });

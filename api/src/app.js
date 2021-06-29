@@ -12,6 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
+app.use('../uploads', express.static('uploads'));
 require('./controllers/AuthController')(app);
 
 module.exports = app;

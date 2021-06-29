@@ -10,10 +10,10 @@ const routes = express.Router();
 const multer = require('multer');
 const authMiddleware = require('./config/authMiddleware');
 
-const storage = multer.diskStorage(({
+const storage = multer.memoryStorage(({
   destination: './uploads/',
   filename(req, file, callback) {
-    callback(null, new Date().toISOString() + file.originalname);
+    callback(null, Math.random(0, 1) * 1000000 + file.originalname);
   },
 }));
 const fileFilter = (req, file, callback) => {
@@ -50,7 +50,7 @@ routes.get('/diabetes/:id', DiabetesController.indexOne);
 routes.put('/diabetes/:id', authMiddleware, DiabetesController.update);
 routes.delete('/diabetes/:id', authMiddleware, DiabetesController.delete);
 
-routes.post('/publications', upload.single('publication_image'), PublicationsController.store);
+routes.post('/publications', authMiddleware, upload.single('publication_image'), PublicationsController.store);
 routes.get('/publications', PublicationsController.indexAll);
 routes.get('/publications/dir/:id', PublicationsController.indexAllFromDir);
 routes.get('/publications/:id', PublicationsController.indexOne);

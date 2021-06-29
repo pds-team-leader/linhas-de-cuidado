@@ -33,7 +33,7 @@
                 ></v-select>
               </v-row>
               <v-row class="directoryRow">
-                <v-col style="padding: 0">
+                <v-col style="padding: 0; max-width: 335px">
                   <v-text-field
                     v-model="dirTitle"
                     outlined
@@ -55,7 +55,8 @@
                 </v-col>
                 <v-col style="padding: 0">
                   <v-autocomplete
-                    class="vautocomplete"
+                    class="vautocomplete mx-8"
+                    style="max-width: 335px"
                     v-model="selectedTags"
                     :items="tags"
                     dense
@@ -63,12 +64,11 @@
                     multiple
                     color="primary"
                     label="Tags"
-                    height="106px"
                   ></v-autocomplete>
                 </v-col>
               </v-row>
               <div v-for="(section, index) in sections" :key="`${index}`">
-                <v-row>
+                <v-row style="align-items: center;">
                   <v-text-field
                     v-model="section.title"
                     outlined
@@ -77,6 +77,21 @@
                     :rules="inputRules"
                     required
                     style="max-width: 335px; margin-top: 1rem"
+                  />
+                  <v-file-input
+                    class="mt-4 imgInput"
+                    v-model="section.image"
+                    required
+                    chips
+                    show-size
+                    truncate-length="25"
+                    outlined
+                    dense
+                    accept="image/*"
+                    label="Inserir imagem"
+                    prepend-icon="mdi-camera"
+                    style="max-width: 335px; margin-left: 1.1rem; margin-bottom:0"
+                    height='40px'
                   />
                 </v-row>
                 <v-row>
@@ -162,11 +177,17 @@ export default {
       });
 
       this.sections.forEach(async (section) => {
-        await api.post('/publications', {
-          title: section.title,
-          directory: directory.data.id,
-          description: section.text,
-          isFromGuide: true,
+        const formData = new FormData();
+        formData.append('publication_image', section.image);
+        formData.append('title', section.title);
+        formData.append('description', section.text);
+        formData.append('directory', directory.data.id);
+        formData.append('isFromGuide', true);
+
+        await api.post('/publications', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         });
       });
 
@@ -237,6 +258,7 @@ export default {
 
 .directoryRow {
   display: flex;
+  justify-content: flex-start;
   padding: 0;
 
   @media only screen and (max-width: 600px) {
@@ -246,6 +268,10 @@ export default {
 
 .vautocomplete {
   overflow: hidden;
+}
+
+.v-text-field__details {
+  display: none !important;
 }
 
 </style>
