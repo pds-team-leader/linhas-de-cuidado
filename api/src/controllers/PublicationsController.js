@@ -36,14 +36,31 @@ export default {
     const {
       title, directory, description, isFromGuide,
     } = req.body;
-    const { mimetype, filename, path } = req.file;
-    console.log(path, filename, mimetype);
+
+    const file = {
+      mimetype: null,
+      filename: null,
+      path: null,
+    };
+
+    if (req.file) {
+      const { mimetype, filename, path } = req.file;
+      file.mimetype = mimetype;
+      file.filename = filename;
+      file.path = path;
+    }
 
     let publication;
 
     try {
       publication = await Publication.create({
-        title, directory, description, isFromGuide, imageType:mimetype, imageName:filename, imagePath:path
+        title,
+        directory,
+        description,
+        isFromGuide,
+        imageType: file.mimetype,
+        imageName: file.filename,
+        imagePath: file.path,
       });
     } catch (error) {
       return res.status(400).json({ erro: `Falha ao criar nova Publicação: ${error}` });
