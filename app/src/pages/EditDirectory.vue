@@ -4,13 +4,29 @@
     <v-container class="vcontainer">
       <v-row>
         <v-col class="main-col">
+          <v-alert
+              v-if="showAlert"
+              class="alert"
+              :style="`top: ${alertPosition}% !important`"
+              transition="fade-transition"
+              tag="alert"
+              color="white"
+              elevation="12"
+              width="290px"
+            >
+              <p>Tem certeza que deseja deletar a seção?</p>
+              <v-row class="mt-5 mb-1" justify="space-around">
+                <v-btn color="error" @click="deleteSection"> Deletar </v-btn>
+                <v-btn color="primary" @click="showAlert = false">Cancelar</v-btn>
+              </v-row>
+            </v-alert>
           <v-sheet
             v-if="admin"
             class="vsheet pt-3"
             outlined
             max-height="56px"
           >
-            <p class="title" >Nova publicação</p>
+            <p class="title" >Editar publicação</p>
           </v-sheet>
 
           <v-container class="forms">
@@ -34,18 +50,43 @@
                     required
                     style="max-width: 335px;"
                   />
+                  <v-autocomplete
+                    class="vautocomplete"
+                    v-model="directory.tags"
+                    :items="tags"
+                    dense
+                    outlined
+                    multiple
+                    color="primary"
+                    label="Tags"
+                    height="106px"
+                    return-object
+                    @input="handleAutocompleteInput"
+                  ></v-autocomplete>
               </v-row>
               <div v-for="(section) in sections" :key="section.id">
-                <v-row>
-                  <v-text-field
-                    v-model="section.title"
-                    outlined
-                    dense
-                    label="Título da seção"
-                    :rules="inputRules"
-                    required
-                    style="max-width: 335px; margin-top: 1rem"
-                  />
+                <v-row justify="space-between" style="align-items: center">
+                  <v-col :cols="10" style="padding: 0">
+                    <v-text-field
+                      v-model="section.title"
+                      outlined
+                      dense
+                      label="Título da seção"
+                      :rules="inputRules"
+                      required
+                      style="max-width: 335px; margin-top: 1rem"
+                    />
+                  </v-col>
+                  <v-col :cols="2">
+                    <v-btn
+                      color="error"
+                      class="mb-2"
+                      icon
+                      @click="sectionToDelete = section.id; showAlert = true"
+                    >
+                    <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-col>
                 </v-row>
                 <v-row>
                   <v-textarea
@@ -100,6 +141,12 @@ export default {
       inputRules: [
         (v) => !!v || 'Campo Obrigatório',
       ],
+      tags: [],
+      originals: [],
+      selectedTags: [],
+      showAlert: false,
+      alertPosition: null,
+      sectionToDelete: null,
     };
   },
   computed: {
@@ -116,35 +163,73 @@ export default {
   mounted() {
     this.getDirectory();
     this.getPublications();
+    this.getTags();
+  },
+  watch: {
+    showAlert() {
+      this.alertPosition = (window.scrollY / (window.screen.availHeight)) * 100;
+    },
   },
   methods: {
+    handleAutocompleteInput(value) {
+      this.selectedTags = value;
+    },
     addSection() {
-      this.sections.push({ title: '', text: '' });
+      this.sections.push({ title: '', description: '' });
+    },
+    async getTags() {
+      const response = await api.get('/tag');
+      this.tags = response.data;
     },
     async getDirectory() {
       const response = await api.get(`/${this.guia}/${this.dirId}`);
       this.directory = response.data;
+      this.selectedTags = this.directory.tags.map((tag) => tag);
     },
     async getPublications() {
       const response = await api.get(`/publications/dir/${this.dirId}`);
       this.sections = response.data;
+      this.originals = this.sections.concat();
+    },
+    async deleteSection() {
+      await api.delete(`/publications/${this.sectionToDelete}`);
+      this.sectionToDelete = null;
+      this.showAlert = false;
+      this.reset();
     },
     async addDirectory() {
+      this.selectedTags = this.selectedTags.map((tag) => tag.id);
+
       await api.put(`/${this.guia}/${this.dirId}`, {
         title: this.directory.title,
         description: this.directory.description,
+        tagIds: this.selectedTags,
       });
 
       await this.sections.forEach(async (section) => {
-        await api.put(`/publications/${section.id}`, {
-          title: section.title,
-          description: section.description,
-          isFromGuide: section.isFromGuide,
-          directory: section.directory,
-        });
+        if (section.id !== undefined) {
+          await api.put(`/publications/${section.id}`, {
+            title: section.title,
+            description: section.description,
+            isFromGuide: section.isFromGuide,
+            directory: section.directory,
+          });
+        } else {
+          await api.post('/publications', {
+            title: section.title,
+            description: section.description,
+            isFromGuide: true,
+            directory: this.dirId,
+          });
+        }
       });
 
       this.$router.push('/');
+    },
+    reset() {
+      this.getDirectory();
+      this.getTags();
+      this.getPublications();
     },
   },
 
@@ -195,6 +280,12 @@ export default {
   line-height: 32px ;
   letter-spacing: 1px !important;
   color: #3988B8;
+}
+
+.alert {
+  position: absolute;
+  margin-top: 200px;
+  z-index: 12;
 }
 
 </style>
