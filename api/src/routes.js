@@ -9,6 +9,33 @@ import AdminController from './controllers/AdminController';
 const routes = express.Router();
 const authMiddleware = require('./config/authMiddleware');
 
+const multer = require('multer');
+const storage = multer.diskStorage(({
+    destination: './uploads/',
+    filename: function (req, file, callback){
+        callback(null, new Date().toISOString() + file.originalname);
+    }
+}));
+const fileFilter = (req, file, callback) => {
+        if (
+            file.mimetype === 'image/jpg' || 
+            file.mimetype === 'image/png' || 
+            file.mimetype === 'image/bmp' ||
+            file.mimetype === 'image/jpeg'
+            ) {
+        callback(null, true);
+    } else {
+        callback(null, false);
+    }
+};
+const upload = multer({ 
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 10 // 10MB
+    },
+    fileFilter: fileFilter 
+});
+
 routes.get('/', (req, res) => res.json({ message: 'Sorry, Mario! Your home page is in another castle' }));
 
 routes.post('/admin', authMiddleware, AdminController.store);
@@ -23,7 +50,7 @@ routes.get('/diabetes/:id', DiabetesController.indexOne);
 routes.put('/diabetes/:id', authMiddleware, DiabetesController.update);
 routes.delete('/diabetes/:id', authMiddleware, DiabetesController.delete);
 
-routes.post('/publications', authMiddleware, PublicationsController.store);
+routes.post('/publications', authMiddleware, upload.single('publication_image'), PublicationsController.store);
 routes.get('/publications', PublicationsController.indexAll);
 routes.get('/publications/dir/:id', PublicationsController.indexAllFromDir);
 routes.get('/publications/:id', PublicationsController.indexOne);
