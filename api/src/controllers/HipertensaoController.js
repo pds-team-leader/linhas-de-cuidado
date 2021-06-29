@@ -54,7 +54,7 @@ export default {
     });
 
     if (!directory) {
-      return res.json({ erro: 'Nenhum Diretório encontrado.' });
+      return res.status(404).json({ erro: 'Nenhum Diretório encontrado.' });
     }
 
     return res.json(directory);
@@ -77,7 +77,7 @@ export default {
     });
 
     if (!directory) {
-      return res.json({ erro: 'Diretório não encontrado.' });
+      return res.status(404).json({ erro: 'Diretório não encontrado.' });
     }
 
     return res.json(directory);

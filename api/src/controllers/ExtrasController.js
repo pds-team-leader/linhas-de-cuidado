@@ -24,7 +24,7 @@ export default {
     });
 
     if (!directory) {
-      return res.json({ erro: 'Nenhum Diretório encontrado.' });
+      return res.status(404).json({ erro: 'Nenhum Diretório encontrado.' });
     }
 
     return res.json(directory);
@@ -36,9 +36,9 @@ export default {
     const directory = await Directory.findByPk(id);
 
     if (!directory) {
-      return res.json({ erro: 'Diretório não encontrado.' });
-    } else if (directory.guide !== 3) {
-      return res.status(400).json({ erro: 'Diretório não pertence a esse guia.' });
+      return res.status(404).json({ erro: 'Diretório não encontrado.' });
+    } if (directory.guide !== 3) {
+      return res.status(404).json({ erro: 'Diretório não pertence a esse guia.' });
     }
 
     return res.json(directory);
