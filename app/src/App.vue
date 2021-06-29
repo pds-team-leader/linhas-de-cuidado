@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app color="#f5f5f5">
       <v-list>
         <v-list-item-group color="primary">
           <v-list-item
@@ -47,7 +47,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-header v-show="isHome" />
+      <v-header v-if="isHome" />
       <router-view ref="routerRef" @logado="admin = true" ></router-view>
     </v-main>
 

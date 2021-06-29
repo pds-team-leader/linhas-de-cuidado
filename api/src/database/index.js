@@ -17,5 +17,6 @@ Publication.init(connection);
 
 Directory.associate(connection.models);
 Tag.associate(connection.models);
+Publication.associate(connection.models);
 
 module.exports = connection;

@@ -25,8 +25,9 @@
             </v-row>
           </v-sheet>
           <div v-for="pub in publications" class="text-col" :key="pub.id">
-            <p class="pub-title">{{pub.title}}</p>
-            <p class="pub-description">{{pub.description}}</p>
+            <p class="pub-title"> {{pub.title}} </p>
+            <p class="pub-description"> {{pub.description}} </p>
+            <v-img :aspect-ratio="16/9" :src="dataUrl(pub.imageData.data)"/>
           </div>
           <tags v-if="tags.length" class="tags" :tags="tags"/>
         </v-col>
@@ -91,6 +92,12 @@ export default {
     reset() {
       this.directory = '';
       this.publications = '';
+    },
+    dataUrl(image) {
+      return `data:image/jpeg;base64,${btoa(
+        new Uint8Array(image)
+          .reduce((data, byte) => data + String.fromCharCode(byte), ''),
+      )}`;
     },
   },
   mounted() {
