@@ -41,7 +41,7 @@
         ></v-img>
         <v-card-title class="justify-center">Conteúdos Extras</v-card-title>
         <v-card-text>Videos, podcasts, artigos e diversos conteúdos.</v-card-text>
-        <v-btn class="mb-6" color="primary" to="/conteudo-extra">Saber mais</v-btn>
+        <v-btn class="mb-6" color="primary" to="/guia/extras">Saber mais</v-btn>
       </v-card>
     </div>
 
