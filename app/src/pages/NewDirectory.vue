@@ -21,7 +21,8 @@
                   v-model="guia"
                   :items="[
                     {text: 'Guia Diabetes Mellitus', value: 'diabetes'},
-                    {text: 'Guia Hipertensão Arterial', value: 'hipertensao'}
+                    {text: 'Guia Hipertensão Arterial', value: 'hipertensao'},
+                    {text: 'Conteúdos Extras', value: 'extras'}
                   ]"
                   dense
                   label="Guia"
