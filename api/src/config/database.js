@@ -8,7 +8,9 @@ module.exports = {
   username: process.env.PG_USERNAME,
   password: process.env.PG_PASSWORD,
   database: 'linhas-de-cuidado-db',
-  ssl: true,
+  dialectOptions: {
+    ssl: true
+  },
   define: {
     timestamps: true,
     underscored: true,
