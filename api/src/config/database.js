@@ -7,7 +7,7 @@ module.exports = {
     : process.env.PG_HOST,
   username: process.env.PG_USERNAME,
   password: process.env.PG_PASSWORD,
-  database: 'linhas-de-cuidado-db',
+  database: process.env.PG_DATABASE,
   dialectOptions: {
     ssl: {
       require: true,
