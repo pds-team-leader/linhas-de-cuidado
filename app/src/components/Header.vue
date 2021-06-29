@@ -14,20 +14,20 @@
     </p>
     <v-col sm="6" md="6">
       <v-autocomplete
-        slot="extension"
-        v-model="select"
+        v-model="selectedId"
         :loading="isLoading"
-        :items="items"
+        :items="titles"
+        :item-text="publications.title"
         :search-input.sync="search"
         cache-items
-        append-icon=""
         class="mx-4"
-        hide-no-data
         hide-details
+        :allow-overflow="false"
         label="Pesquisar"
         solo
         dense
         clearable
+        @input="goToDir"
       ></v-autocomplete>
     </v-col>
   </v-col>
@@ -35,39 +35,50 @@
 </template>
 
 <script>
+import api from '../services/api';
+
 export default {
   data: () => ({
-    isLoading: false,
-    items: [],
+    publications: [],
     model: null,
     search: null,
     tab: null,
-    select: {},
+    selectedId: '',
+    titles: [],
   }),
-
-  watch: {
-    model(val) {
-      if (val != null) this.tab = 0;
-      else this.tab = null;
+  computed: {
+    isLoading() {
+      return this.publications.length === 0;
     },
-    search(val) {
-      console.log(val);
-      // Items have already been loaded
-      if (this.items.length > 0) return;
-
-      this.isLoading = true;
-
-      // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then((res) => res.clone().json())
-        .then((res) => {
-          this.items = res;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => { this.isLoading = false; });
+  },
+  methods: {
+    async getPublications() {
+      const response = await api.get('/publications');
+      this.publications = response.data;
+      this.titles = this.publications.map((pub) => ({ text: pub.title, value: pub.directory }));
     },
+    async goToDir() {
+      const selectedPublication = this.publications.find(
+        (pub) => pub.directory === this.selectedId,
+      );
+      let guia = 'diabetes';
+      if (selectedPublication.directories.guide === 2) {
+        guia = 'hipertensao';
+      }
+      if (selectedPublication.directories.guide === 3) {
+        guia = 'extras';
+      }
+      this.$router.push(`/guia/${guia}/${this.selectedId}`);
+    },
+    reset() {
+      this.publications = [];
+      this.selectedId = '';
+      this.titles = [];
+      this.getPublications();
+    },
+  },
+  mounted() {
+    this.reset();
   },
 };
 </script>

@@ -32,50 +32,67 @@
           <v-container class="forms">
             <v-form v-model="isValid">
               <v-row justify="space-between" style="max-width: 690px">
-                  <v-text-field
-                    v-model="directory.title"
-                    outlined
-                    dense
-                    label="Título"
-                    :rules="inputRules"
-                    required
-                    style="max-width: 335px; "
-                  />
-                  <v-text-field
-                    v-model="directory.description"
-                    outlined
-                    dense
-                    label="Descrição"
-                    :rules="inputRules"
-                    required
-                    style="max-width: 335px;"
-                  />
-                  <v-autocomplete
-                    class="vautocomplete"
-                    v-model="directory.tags"
-                    :items="tags"
-                    dense
-                    outlined
-                    multiple
-                    color="primary"
-                    label="Tags"
-                    height="106px"
-                    return-object
-                    @input="handleAutocompleteInput"
-                  ></v-autocomplete>
+                <v-text-field
+                  v-model="directory.title"
+                  outlined
+                  dense
+                  label="Título"
+                  :rules="inputRules"
+                  required
+                  style="max-width: 335px; "
+                />
+                <v-text-field
+                  v-model="directory.description"
+                  outlined
+                  dense
+                  label="Descrição"
+                  :rules="inputRules"
+                  required
+                  style="max-width: 335px;"
+                />
+                <v-autocomplete
+                  class="vautocomplete"
+                  v-model="directory.tags"
+                  :items="tags"
+                  dense
+                  outlined
+                  multiple
+                  color="primary"
+                  label="Tags"
+                  height="106px"
+                  return-object
+                  @input="handleAutocompleteInput"
+                ></v-autocomplete>
               </v-row>
               <div v-for="(section) in sections" :key="section.id">
                 <v-row justify="space-between" style="align-items: center">
-                  <v-col :cols="10" style="padding: 0">
-                    <v-text-field
-                      v-model="section.title"
-                      outlined
-                      dense
-                      label="Título da seção"
-                      :rules="inputRules"
-                      required
-                      style="max-width: 335px; margin-top: 1rem"
-                    />
+                  <v-col :cols="10">
+                    <v-row>
+                      <v-text-field
+                        v-model="section.title"
+                        outlined
+                        dense
+                        label="Título da seção"
+                        :rules="inputRules"
+                        required
+                        style="max-width: 335px; margin-top: 1rem"
+                      />
+                      <v-file-input
+                        v-if="!section.imageData"
+                        v-model="section.image"
+                        required
+                        chips
+                        show-size
+                        truncate-length="25"
+                        outlined
+                        dense
+                        accept="image/*"
+                        label="Inserir imagem"
+                        prepend-icon="mdi-camera"
+                        style="max-width: 335px; margin-left: 1.1rem"
+                      />
+                    </v-row>
+
                   </v-col>
                   <v-col :cols="2">
                     <v-btn
@@ -96,6 +113,14 @@
                     label="Texto da seção"
                     :rules="inputRules"
                     required
+                  />
+                </v-row>
+                <v-row>
+                  <v-img
+                    v-if="section.imageData"
+                    class="mb-8"
+                    :aspect-ratio="16/9"
+                    :src="dataUrl(section.imageData.data)"
                   />
                 </v-row>
               </div>
@@ -215,16 +240,28 @@ export default {
             directory: section.directory,
           });
         } else {
-          await api.post('/publications', {
-            title: section.title,
-            description: section.description,
-            isFromGuide: true,
-            directory: this.dirId,
+          const formData = new FormData();
+          formData.append('publication_image', section.image);
+          formData.append('title', section.title);
+          formData.append('description', section.text);
+          formData.append('directory', this.dirId);
+          formData.append('isFromGuide', true);
+
+          await api.post('/publications', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           });
         }
       });
 
       this.$router.push('/');
+    },
+    dataUrl(image) {
+      return `data:image/jpeg;base64,${btoa(
+        new Uint8Array(image)
+          .reduce((data, byte) => data + String.fromCharCode(byte), ''),
+      )}`;
     },
     reset() {
       this.getDirectory();
