@@ -5,7 +5,7 @@ export default {
     const publication = await Publication.findAll();
 
     if (!publication) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+      return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
     }
     return res.json(publication);
   },
@@ -15,7 +15,7 @@ export default {
     const publication = await Publication.findByPk(id);
 
     if (!publication) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+      return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
     }
     return res.json(publication);
   },
@@ -27,7 +27,7 @@ export default {
     });
 
     if (!publications) {
-      return res.status(400).json({ erro: 'Nenhuma publicação encontrada' });
+      return res.status(404).json({ erro: 'Nenhuma publicação encontrada' });
     }
     return res.json(publications);
   },
@@ -38,9 +38,9 @@ export default {
     } = req.body;
 
     const file = {
-      mimetype: null,
-      filename: null,
-      path: null,
+      mimetype: '',
+      filename: '',
+      path: '',
     };
 
     if (req.file) {
