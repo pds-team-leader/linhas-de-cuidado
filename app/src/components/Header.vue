@@ -19,7 +19,6 @@
         :items="titles"
         :item-text="publications.title"
         :search-input.sync="search"
-        cache-items
         class="mx-4"
         hide-details
         :allow-overflow="false"
