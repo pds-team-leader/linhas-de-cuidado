@@ -7,7 +7,7 @@ require('./database');
 
 const app = express();
 
-app.use(cors({origin: 'https://linhas-de-cuidado.vercel.app/'}));
+app.use(cors({"Access-Control-Allow-Origin": 'https://linhas-de-cuidado.vercel.app/'}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
