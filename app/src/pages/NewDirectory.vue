@@ -79,7 +79,7 @@
                     style="max-width: 335px; margin-top: 1rem"
                   />
                   <v-file-input
-                    class="mt-4 imgInput"
+                    class="mt-4"
                     v-model="section.image"
                     required
                     chips

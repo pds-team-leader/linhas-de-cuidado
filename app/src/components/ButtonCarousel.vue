@@ -9,16 +9,16 @@
     >
       <v-slide-item
         v-for="option in options"
-        :key="option.name"
+        :key="option.id"
       >
         <v-btn
           class="button ma-1"
           color="primary"
           elevation="2"
           small
-          :to="`/results/${option.id}`"
+          :to="`/results/${option.value}`"
         >
-          {{ option.name }}
+          {{ option.text }}
         </v-btn>
       </v-slide-item>
     </v-slide-group>
@@ -26,72 +26,23 @@
 </template>
 
 <script>
+import api from '../services/api';
+
 export default {
   data() {
     return {
-      options: [
-        {
-          name: 'Classificação',
-          id: 1,
-        },
-        {
-          name: 'Diagnóstico',
-          id: 2,
-        },
-        {
-          name: 'Medicação',
-          id: 3,
-        },
-        {
-          name: 'Prevenção',
-          id: 4,
-        },
-        {
-          name: 'Consulta',
-          id: 5,
-        },
-        {
-          name: 'Exame',
-          id: 6,
-        },
-        {
-          name: 'Tratamento farmacológico',
-          id: 7,
-        },
-        {
-          name: 'Tratamento não farmacológico',
-          id: 8,
-        },
-        {
-          name: 'Complicações',
-          id: 9,
-        },
-        {
-          name: 'Orientações',
-          id: 10,
-        },
-        {
-          name: 'Avaliação',
-          id: 11,
-        },
-        {
-          name: 'Insulina',
-          id: 12,
-        },
-        {
-          name: 'Monitoramento',
-          id: 13,
-        },
-        {
-          name: 'Rastreamento',
-          id: 14,
-        },
-        {
-          name: 'Comorbidades',
-          id: 15,
-        },
-      ],
+      options: [],
     };
+  },
+  methods: {
+    async getTags() {
+      const response = await api.get('/tag');
+      const tags = response.data;
+      this.options = tags.map((tag) => ({ text: tag.text, value: tag.id }));
+    },
+  },
+  mounted() {
+    this.getTags();
   },
 
 };
