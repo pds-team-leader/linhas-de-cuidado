@@ -7,12 +7,7 @@ require('./database');
 
 const app = express();
 
-const corsOptions = {
-  origin: 'https://linhas-de-cuidado.vercel.app/',
-  optionsSuccessStatus: 200
-}
-
-app.use(cors(corsOptions));
+app.use(cors({origin: 'https://linhas-de-cuidado.vercel.app/'}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
