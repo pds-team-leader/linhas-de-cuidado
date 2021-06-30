@@ -38,11 +38,11 @@ const upload = multer({
 
 routes.get('/', (req, res) => res.json({ message: 'Sorry, Mario! Your home page is in another castle' }));
 
-routes.post('/admin', AdminController.store);
+routes.post('/admin', authMiddleware, AdminController.store);
 // routes.get('/admin', AdminController.indexAll);
 routes.get('/admin/:id', AdminController.indexOne);
 // routes.put('/admin/:id', authMiddleware, AdminController.update);
-routes.delete('/admin/:id', AdminController.delete);
+routes.delete('/admin/:id', authMiddleware, AdminController.delete);
 
 routes.post('/diabetes', authMiddleware, DiabetesController.store);
 routes.get('/diabetes', DiabetesController.indexAll);
