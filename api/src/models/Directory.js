@@ -31,7 +31,9 @@ class Directory extends Model {
 
   static associate(models) {
     this.belongsToMany(models.Tag, { foreignKey: 'id_directory', through: 'directories_tags', as: 'tags' });
-    this.hasMany(models.Publication, { foreignKey: 'directory', as: 'publications' });
+    this.hasMany(models.Publication, {
+      onDelete: 'cascade', hooks: 'true', foreignKey: 'directory', as: 'publications',
+    });
   }
 }
 
