@@ -38,7 +38,7 @@ const upload = multer({
 
 routes.get('/', (req, res) => res.json({ message: 'Sorry, Mario! Your home page is in another castle' }));
 
-routes.post('/admin', authMiddleware, AdminController.store);
+routes.post('/admin', AdminController.store);
 // routes.get('/admin', AdminController.indexAll);
 routes.get('/admin/:id', AdminController.indexOne);
 // routes.put('/admin/:id', authMiddleware, AdminController.update);
