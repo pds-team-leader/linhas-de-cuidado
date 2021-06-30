@@ -27,7 +27,11 @@
           <div v-for="pub in publications" class="text-col" :key="pub.id">
             <p class="pub-title"> {{pub.title}} </p>
             <p class="pub-description"> {{pub.description}} </p>
-            <v-img :aspect-ratio="16/9" :src="dataUrl(pub.imageData.data)"/>
+            <v-img
+              v-if="pub.imageData.data.length"
+              :aspect-ratio="16/9"
+              :src="dataUrl(pub.imageData.data)"
+            />
           </div>
           <tags v-if="tags.length" class="tags" :tags="tags"/>
         </v-col>

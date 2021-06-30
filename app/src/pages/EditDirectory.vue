@@ -78,7 +78,8 @@
                         style="max-width: 335px; margin-top: 1rem"
                       />
                       <v-file-input
-                        v-if="!section.imageData"
+                        class="mt-4"
+                        v-if="section.createdAt === '' && !section.imageData.data.length > 0"
                         v-model="section.image"
                         required
                         chips
@@ -117,7 +118,7 @@
                 </v-row>
                 <v-row>
                   <v-img
-                    v-if="section.imageData"
+                    v-show="section.imageData.data.length > 0"
                     class="mb-8"
                     :aspect-ratio="16/9"
                     :src="dataUrl(section.imageData.data)"
@@ -200,7 +201,9 @@ export default {
       this.selectedTags = value;
     },
     addSection() {
-      this.sections.push({ title: '', description: '' });
+      this.sections.push({
+        createdAt: '', title: '', description: '', imageData: { data: [] },
+      });
     },
     async getTags() {
       const response = await api.get('/tag');
@@ -243,7 +246,7 @@ export default {
           const formData = new FormData();
           formData.append('publication_image', section.image);
           formData.append('title', section.title);
-          formData.append('description', section.text);
+          formData.append('description', section.description);
           formData.append('directory', this.dirId);
           formData.append('isFromGuide', true);
 
