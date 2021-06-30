@@ -42,7 +42,7 @@ routes.post('/admin', AdminController.store);
 // routes.get('/admin', AdminController.indexAll);
 routes.get('/admin/:id', AdminController.indexOne);
 // routes.put('/admin/:id', authMiddleware, AdminController.update);
-routes.delete('/admin/:id', authMiddleware, AdminController.delete);
+routes.delete('/admin/:id', AdminController.delete);
 
 routes.post('/diabetes', authMiddleware, DiabetesController.store);
 routes.get('/diabetes', DiabetesController.indexAll);
