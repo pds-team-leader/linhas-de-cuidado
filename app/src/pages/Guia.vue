@@ -29,7 +29,7 @@
             outlined
             max-height="56px"
           >
-            <p @click="$router.push('/nova-publicacao')" class="title" >+ Novo Diretório</p>
+            <p @click="$router.push('/nova-publicacao')" class="title" >+ Nova Publicação</p>
           </v-sheet>
           <p class="mt-5" v-if="directories.length === 0">
               Não há publicações
